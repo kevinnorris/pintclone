@@ -33,7 +33,11 @@ module.exports = (rep, pgp) => (
 
     // Tries to find a user from id;
     find: (id) =>
-        rep.oneOrNone('SELECT * FROM Users WHERE id = $1', id),
+        rep.oneOrNone(sql.find, id),
+
+    // Tries to find a user by githubId;
+    findByGithubId: (githubId) =>
+        rep.oneOrNone(sql.findByGithubId, githubId),
 
     // Returns all user records;
     all: () =>

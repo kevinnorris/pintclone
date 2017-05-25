@@ -1,8 +1,10 @@
 /* eslint consistent-return:0 */
-
+require('dotenv').config();
 const express = require('express');
+const passport = require('passport');
 const logger = require('./logger');
 const api = require('./api');
+const auth = require('./auth');
 
 const argv = require('minimist')(process.argv.slice(2));
 const setup = require('./middlewares/frontendMiddleware');
@@ -11,7 +13,12 @@ const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngr
 const resolve = require('path').resolve;
 const app = express();
 
+// add passport.js
+require('./config/passport')(passport);
+app.use(passport.initialize());
+
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
+app.use('/auth', auth);
 app.use('/api', api);
 
 // In production we need to pass these values in instead of relying on webpack

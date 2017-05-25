@@ -26,7 +26,7 @@ const options = {
 const pgp = require('pg-promise')(options);
 
 // Create the database instance:
-const db = pgp(process.env.DATABASE_URL || 'postgres://@localhost:5432/pintclone');
+const db = pgp(process.env.DATABASE_URL);
 
 // If you ever need to change the default pool size, here's an example:
 // pgp.pg.defaults.poolSize = 20;

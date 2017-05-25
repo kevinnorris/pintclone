@@ -1,17 +1,6 @@
 const QueryFile = require('pg-promise').QueryFile;
 const path = require('path');
 
-module.exports = {
-  users: {
-    create: sql('users/create.sql'),
-    empty: sql('users/empty.sql'),
-    init: sql('users/init.sql'),
-    drop: sql('users/drop.sql'),
-    add: sql('users/add.sql'),
-    find: sql('users/find.sql'),
-  },
-};
-
 // /////////////////////////////////////////////
 // Helper for linking to external query files;
 function sql(file) {
@@ -43,3 +32,15 @@ function sql(file) {
   // See QueryFile API:
   // http://vitaly-t.github.io/pg-promise/QueryFile.html
 }
+
+module.exports = {
+  users: {
+    create: sql('users/create.sql'),
+    empty: sql('users/empty.sql'),
+    init: sql('users/init.sql'),
+    drop: sql('users/drop.sql'),
+    add: sql('users/add.sql'),
+    find: sql('users/find.sql'),
+    findByGithubId: sql('users/findByGithubId.sql'),
+  },
+};

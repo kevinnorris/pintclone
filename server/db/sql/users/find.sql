@@ -6,4 +6,3 @@
 
 SELECT * FROM ${schema~}.Users
 WHERE id = $1
-RETURNING (id, githubId, username, displayname)

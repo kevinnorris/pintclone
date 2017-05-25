@@ -6,4 +6,4 @@
 
 INSERT INTO ${schema~}.Users(githubId, username, displayname)
 VALUES($1, $2, $3)
-RETURNING id
+RETURNING (id, githubId, username, displayname)
