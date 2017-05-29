@@ -22,9 +22,7 @@ injectGlobal`
     min-width: 100%;
   }
 
-  p,
-  label {
-    font-family: Georgia, Times, 'Times New Roman', serif;
-    line-height: 1.5em;
+  .authModal {
+    width: 410px;
   }
 `;

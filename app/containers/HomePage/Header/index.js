@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import HeaderButton from 'components/HeaderButton';
 import { background, fontFamily } from 'utils/colors';
 import Logo from 'components/Logo';
-import Authenticate from './Authenticate';
 
 const Wrapper = styled.div`
   background: ${background};
@@ -30,9 +30,7 @@ const AppName = styled.p`
   font-family: ${fontFamily};
 `;
 
-// TODO: make header look nice
-
-function Header({ error }) {
+function Header({ error, showModal }) {
   return (
     <Wrapper>
       <div className="container">
@@ -44,8 +42,8 @@ function Header({ error }) {
             <AppName>Pintclone</AppName>
           </ItemWrapper>
           <ItemWrapper>
-            <Authenticate login={false} />
-            <Authenticate login />
+            <HeaderButton main onClick={showModal(true)}>Signup</HeaderButton>
+            <HeaderButton onClick={showModal(false)}>Login</HeaderButton>
           </ItemWrapper>
         </InnerWrapper>
       </div>
@@ -58,6 +56,7 @@ Header.propTypes = {
     React.PropTypes.string,
     React.PropTypes.bool,
   ]),
+  showModal: React.PropTypes.func.isRequired,
 };
 
 export default Header;
