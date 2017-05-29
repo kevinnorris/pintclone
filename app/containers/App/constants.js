@@ -9,4 +9,7 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
-export const DEFAULT_LOCALE = 'en';
+export const AUTHENTICATE_USER_SUCCESS = 'app/App/AUTHENTICATE_USER_SUCCESS';
+export const AUTHENTICATE_USER_ERROR = 'app/App/AUTHENTICATE_USER_ERROR';
+
+export const LOGOUT_USER = 'app/App/LOGOUT_USER';
