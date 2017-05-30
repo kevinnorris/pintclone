@@ -39,6 +39,10 @@ module.exports = (rep, pgp) => (
     findByGithubId: (githubId) =>
         rep.oneOrNone(sql.findByGithubId, githubId),
 
+    // Tries to find a user by twitterId;
+    findByTwitterId: (twitterId) =>
+        rep.oneOrNone(sql.findByTwitterId, twitterId),
+
     // Returns all user records;
     all: () =>
         rep.any('SELECT * FROM Users'),

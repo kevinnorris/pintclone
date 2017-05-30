@@ -12,6 +12,18 @@ const isDev = process.env.NODE_ENV !== 'production';
 const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngrok') : false;
 const resolve = require('path').resolve;
 const app = express();
+const session = require('express-session');
+
+// Add session support for passport-twitter
+const sess = {
+  secret: process.env.SESSION_SECRET,
+  cookie: {},
+};
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1); // trust first proxy
+  sess.cookie.secure = true; // serve secure cookies
+}
+app.use(session(sess));
 
 // add passport.js
 require('./config/passport')(passport);

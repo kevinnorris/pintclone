@@ -24,3 +24,9 @@ export const btnBorderRadius = '4px';
 export const fontFamily = '"Helvetica Neue", "Helvetica", arial, sans-serif';
 
 export const errorColor = '#e50000';
+
+export const twitterColor = '#1da1f2';
+export const twitterHighlight = '#2fa6ef';
+
+export const githubColor = 'black';
+export const githubHighlight = '#19191A';

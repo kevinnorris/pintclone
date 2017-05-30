@@ -8,6 +8,7 @@ CREATE TABLE ${schema~}.Users
 (
     id serial PRIMARY KEY,
     githubId text,
+    twitterId text,
     username text NOT NULL,
     displayname text,
     avatarUrl text

@@ -42,5 +42,6 @@ module.exports = {
     add: sql('users/add.sql'),
     find: sql('users/find.sql'),
     findByGithubId: sql('users/findByGithubId.sql'),
+    findByTwitterId: sql('users/findByTwitterId.sql'),
   },
 };

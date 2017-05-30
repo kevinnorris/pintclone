@@ -17,6 +17,7 @@ import Logo from 'components/Logo';
 import { helpTextColor } from 'utils/colors';
 import HeaderButton from 'components/HeaderButton';
 import GithubButton from 'components/GithubButton';
+import TwitterButton from 'components/TwitterButton';
 import Error from 'components/Error';
 
 import { makeSelectError, makeSelectToken, makeSelectUserData } from 'containers/App/selectors';
@@ -69,12 +70,30 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
     }
   )
 
+  handelTwitterLogin = () => {
+    popupTools.popup('/auth/twitter', 'Twitter Connect', {}, (err, response) => {
+      if (err) {
+        this.props.authUserError({ error: err.message });
+      } else {
+        if (response.success) {
+          console.log(response.user);
+          this.props.authUserSuccess({ token: response.token, user: response.user, expiresIn: response.expiresIn });
+          auth.saveCookie(response.token, response.user, response.expiresIn);
+          this.props.toggleModal();
+        } else {
+          this.props.authUserError({ error: response.error });
+        }
+      }
+    });
+  }
+
   handelGithubLogin = () => {
     popupTools.popup('/auth/github', 'Github Connect', {}, (err, response) => {
       if (err) {
         this.props.authUserError({ error: err.message });
       } else {
         if (response.success) {
+          console.log(response.user);
           this.props.authUserSuccess({ token: response.token, user: response.user, expiresIn: response.expiresIn });
           auth.saveCookie(response.token, response.user, response.expiresIn);
           this.props.toggleModal();
@@ -120,6 +139,10 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
             <GithubButton
               onClick={this.handelGithubLogin}
               text={this.props.isSignup ? 'Sign in with Github' : 'Log in with Github'}
+            />
+            <TwitterButton
+              onClick={this.handelTwitterLogin}
+              text={this.props.isSignup ? 'Sign in with Twitter' : 'Log in with Twitter'}
             />
             {this.props.error ?
               <Error>{this.props.error}</Error> :
