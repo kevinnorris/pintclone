@@ -18,6 +18,8 @@ const session = require('express-session');
 const sess = {
   secret: process.env.SESSION_SECRET,
   cookie: {},
+  resave: false,
+  saveUninitialized: false,
 };
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1); // trust first proxy

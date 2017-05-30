@@ -1,9 +1,9 @@
 // import React from 'react';
 // import { shallow } from 'enzyme';
 
-// import GithubButton from '../index';
+// import ThirdPartyAuthBtn from '../index';
 
-describe('<GithubButton />', () => {
+describe('<ThirdPartyAuthBtn />', () => {
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(false);
   });

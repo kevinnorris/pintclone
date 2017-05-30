@@ -16,8 +16,7 @@ import * as auth from 'containers/App/auth';
 import Logo from 'components/Logo';
 import { helpTextColor } from 'utils/colors';
 import HeaderButton from 'components/HeaderButton';
-import GithubButton from 'components/GithubButton';
-import TwitterButton from 'components/TwitterButton';
+import ThirdPartyAuthBtn from 'components/ThirdPartyAuthBtn';
 import Error from 'components/Error';
 
 import { makeSelectError, makeSelectToken, makeSelectUserData } from 'containers/App/selectors';
@@ -122,13 +121,15 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
           <AuthModalBody>
             <Logo>P</Logo>
             <ModalTitle>{this.props.isSignup ? 'Sign up to see more' : 'Log in to see more'}</ModalTitle>
-            <GithubButton
+            <ThirdPartyAuthBtn
               onClick={this.handelLogin(false)}
               text={this.props.isSignup ? 'Sign in with Github' : 'Log in with Github'}
+              isTwitter={false}
             />
-            <TwitterButton
+            <ThirdPartyAuthBtn
               onClick={this.handelLogin(true)}
               text={this.props.isSignup ? 'Sign in with Twitter' : 'Log in with Twitter'}
+              isTwitter
             />
             {this.props.error ?
               <Error>{this.props.error}</Error> :

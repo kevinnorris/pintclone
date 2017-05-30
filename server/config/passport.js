@@ -16,16 +16,10 @@ module.exports = (passport) => {
     done(null, obj);
   });
 
-  // use TwitterStrategy
-  passport.use(new TwitterStrategy({
-    consumerKey: configAuth.twitterAuth.consumerKey,
-    consumerSecret: configAuth.twitterAuth.consumerSecret,
-    callbackURL: configAuth.twitterAuth.callbackURL,
-  },
-  (token, tokenSecret, profile, done) => {
+  function thridPartyCallback(token, tokenSecret, profile, done, dbFind, isTwitter) {
     process.nextTick(() => {
-      // Find user with matching twitter id
-      db.users.findByTwitterId(profile.id)
+      // Find user with matching thrid party profile id
+      dbFind(profile.id)
         .then((user) => {
           // Return existing user
           if (user) {
@@ -34,17 +28,24 @@ module.exports = (passport) => {
           }
 
           // Save new user
-          console.log(`twitterId: ${profile.id}, username: ${profile.username}, displayName: ${profile.displayName}, avatar: ${profile._json.profile_image_url}`);
-          db.users.add([null, profile.id, profile.username, profile.displayName, profile._json.profile_image_url])
+          const profileId = isTwitter ? 'twitterId:' : 'githubId:';
+          console.log(`${profileId} ${profile.id}, username: ${profile.username}, displayName: ${profile.displayName}, avatar: ${isTwitter ? profile._json.profile_img_url : profile._json.avatar_url}`);
+          db.users.add([
+            isTwitter ? null : profile.id,
+            isTwitter ? profile.id : null,
+            profile.username,
+            profile.displayname,
+            isTwitter ? profile._json.profile_image_url : profile._json.avatar_url,
+          ])
             .then((newUserId) => {
               console.log('saving new user');
               const newUser = {
                 id: newUserId,
-                githubid: null,
-                twitterid: profile.id,
+                githubid: isTwitter ? null : profile.id,
+                twitterid: isTwitter ? profile.id : null,
                 username: profile.username,
                 displayname: profile.displayName,
-                avatarurl: profile._json.profile_image_url,
+                avatarurl: isTwitter ? profile._json.profile_image_url : profile._json.avatar_url,
               };
 
               return done(null, newUser);
@@ -57,6 +58,16 @@ module.exports = (passport) => {
         });
     });
   }
+
+  // use TwitterStrategy
+  passport.use(new TwitterStrategy({
+    consumerKey: configAuth.twitterAuth.consumerKey,
+    consumerSecret: configAuth.twitterAuth.consumerSecret,
+    callbackURL: configAuth.twitterAuth.callbackURL,
+  },
+  (token, tokenSecret, profile, done) => (
+    thridPartyCallback(token, tokenSecret, profile, done, db.users.findByTwitterId, true)
+  )
 ));
 
   // use GitHubStrategy
@@ -65,43 +76,8 @@ module.exports = (passport) => {
     clientSecret: configAuth.githubAuth.clientSecret,
     callbackURL: configAuth.githubAuth.callbackURL,
   },
-  (token, refreshToken, profile, done) => {
-    process.nextTick(() => {
-      // Find user with matching github id
-      db.users.findByGithubId(profile.id)
-        .then((user) => {
-          // If the user exists in db return user
-          if (user) {
-            console.log('user found');
-            return done(null, user);
-          }
-
-          // Add new user
-          console.log(`githubId: ${profile.id}, username: ${profile.username}, displayName: ${profile.displayName}, avatar: ${profile._json.avatar_url}`);
-          db.users.add([profile.id, null, profile.username, profile.displayName, profile._json.avatar_url])
-            .then((newUserId) => {
-              console.log('saving new user');
-              const newUser = {
-                id: newUserId,
-                githubid: profile.id,
-                twitterid: null,
-                username: profile.username,
-                displayname: profile.displayName,
-                avatarurl: profile._json.avatar_url,
-              };
-
-              return done(null, newUser);
-            })
-            .catch((err) => {
-              console.log('problem saving user');
-              console.log(err);
-              throw err;
-            });
-        })
-        .catch((error) => {
-          console.log('final catch returning error');
-          return done(error.message || error);
-        });
-    });
-  }));
+  (token, refreshToken, profile, done) => (
+    thridPartyCallback(token, refreshToken, profile, done, db.users.findByGithubId, false)
+    )
+  ));
 };
