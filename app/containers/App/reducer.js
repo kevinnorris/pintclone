@@ -17,6 +17,7 @@ let initialState = fromJS({
     username: false,
     displayname: false,
     githubId: false,
+    avatarUrl: false,
   },
 });
 
@@ -29,7 +30,8 @@ if (cookie) {
     .set('userId', cookie.userId)
     .set('username', cookie.username)
     .set('displayname', cookie.displayname)
-    .set('githubId', cookie.githubId);
+    .set('githubId', cookie.githubId)
+    .set('avatarUrl', cookie.avatarUrl);
 }
 
 function appReducer(state = initialState, action) {
@@ -38,11 +40,12 @@ function appReducer(state = initialState, action) {
       return state
         .set('error', false)
         .set('token', action.payload.token)
-        .set('userId', action.payload.userId)
-        .set('expireDate', action.payload.expireDate)
+        .set('userId', action.payload.user.id)
+        .set('expireDate', Date.now() + action.payload.expiresIn)
         .setIn(['userData', 'username'], action.payload.user.username)
         .setIn(['userData', 'displayname'], action.payload.user.displayname)
-        .setIn(['userData', 'githubId'], action.payload.user.githubId);
+        .setIn(['userData', 'githubId'], action.payload.user.githubid)
+        .setIn(['userData', 'avatarUrl'], action.payload.user.avatarurl);
     case AUTHENTICATE_USER_ERROR:
       return state
         .set('error', action.error);
