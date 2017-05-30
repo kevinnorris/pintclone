@@ -30,7 +30,20 @@ const AppName = styled.p`
   font-family: ${fontFamily};
 `;
 
-function Header({ error, showModal }) {
+function Header({ loggedIn, logout, showModal }) {
+  let ButtonGroup = (
+    <ItemWrapper>
+      <HeaderButton main onClick={showModal(true)}>Signup</HeaderButton>
+      <HeaderButton onClick={showModal(false)}>Login</HeaderButton>
+    </ItemWrapper>
+  );
+  if (loggedIn) {
+    ButtonGroup = (
+      <ItemWrapper>
+        <HeaderButton onClick={logout}>Logout</HeaderButton>
+      </ItemWrapper>
+    );
+  }
   return (
     <Wrapper>
       <div className="container">
@@ -41,10 +54,7 @@ function Header({ error, showModal }) {
             </Logo>
             <AppName>Pintclone</AppName>
           </ItemWrapper>
-          <ItemWrapper>
-            <HeaderButton main onClick={showModal(true)}>Signup</HeaderButton>
-            <HeaderButton onClick={showModal(false)}>Login</HeaderButton>
-          </ItemWrapper>
+          {ButtonGroup}
         </InnerWrapper>
       </div>
     </Wrapper>
@@ -52,10 +62,8 @@ function Header({ error, showModal }) {
 }
 
 Header.propTypes = {
-  error: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.bool,
-  ]),
+  loggedIn: React.PropTypes.bool.isRequired,
+  logout: React.PropTypes.func.isRequired,
   showModal: React.PropTypes.func.isRequired,
 };
 

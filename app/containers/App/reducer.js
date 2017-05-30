@@ -26,12 +26,12 @@ const cookie = loggedIn();
 if (cookie) {
   initialState = initialState
     .set('token', cookie.token)
-    .set('expireDate', new Date(cookie.expireDate))
-    .set('userId', cookie.userId)
-    .set('username', cookie.username)
-    .set('displayname', cookie.displayname)
-    .set('githubId', cookie.githubId)
-    .set('avatarUrl', cookie.avatarUrl);
+    .set('expireDate', cookie.expireDate)
+    .set('userId', cookie.user.userId)
+    .setIn(['userData', 'username'], cookie.user.username)
+    .setIn(['userData', 'displayname'], cookie.user.displayname)
+    .setIn(['userData', 'githubId'], cookie.user.githubid)
+    .setIn(['userData', 'avatarUrl'], cookie.user.avatarurl);
 }
 
 function appReducer(state = initialState, action) {
@@ -56,7 +56,8 @@ function appReducer(state = initialState, action) {
         .set('expireDate', false)
         .setIn(['userData', 'username'], false)
         .setIn(['userData', 'displayname'], false)
-        .setIn(['userData', 'githubId'], false);
+        .setIn(['userData', 'githubId'], false)
+        .setIn(['userData', 'avatarUrl'], false);
     default:
       return state;
   }

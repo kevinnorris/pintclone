@@ -12,10 +12,12 @@ import styled from 'styled-components';
 import popupTools from 'popup-tools';
 import { Modal, ModalBody, ModalFooter } from 'react-bootstrap';
 
+import * as auth from 'containers/App/auth';
 import Logo from 'components/Logo';
 import { helpTextColor } from 'utils/colors';
 import HeaderButton from 'components/HeaderButton';
 import GithubButton from 'components/GithubButton';
+import Error from 'components/Error';
 
 import { makeSelectError, makeSelectToken, makeSelectUserData } from 'containers/App/selectors';
 import { authUserSuccess, authUserError, logoutUser } from 'containers/App/actions';
@@ -69,19 +71,23 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
 
   handelGithubLogin = () => {
     popupTools.popup('/auth/github', 'Github Connect', {}, (err, response) => {
-      console.log(err);
-      console.log(response);
       if (err) {
         this.props.authUserError({ error: err.message });
       } else {
         if (response.success) {
           this.props.authUserSuccess({ token: response.token, user: response.user, expiresIn: response.expiresIn });
+          auth.saveCookie(response.token, response.user, response.expiresIn);
           this.props.toggleModal();
         } else {
           this.props.authUserError({ error: response.error });
         }
       }
     });
+  }
+
+  logout = () => {
+    this.props.logoutUser();
+    auth.logout();
   }
 
   render() {
@@ -103,7 +109,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
             { name: 'description', content: 'Pinterest clone' },
           ]}
         />
-        <Header error={this.props.error} showModal={this.showModal} />
+        <Header loggedIn={!!this.props.token} logout={this.logout} showModal={this.showModal} />
         <h1>
           Home Page
         </h1>
@@ -111,8 +117,14 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
           <AuthModalBody>
             <Logo>P</Logo>
             <ModalTitle>{this.props.isSignup ? 'Sign up to see more' : 'Log in to see more'}</ModalTitle>
-            <GithubButton onClick={this.handelGithubLogin} text={this.props.isSignup ? 'Sign in with Github' : 'Log in with Github'}>
-            </GithubButton>
+            <GithubButton
+              onClick={this.handelGithubLogin}
+              text={this.props.isSignup ? 'Sign in with Github' : 'Log in with Github'}
+            />
+            {this.props.error ?
+              <Error>{this.props.error}</Error> :
+              null
+            }
           </AuthModalBody>
           <AuthModalFooter>
             <ModalFooterTxt>{this.props.isSignup ? 'Already have an account?' : 'Need an account?'}</ModalFooterTxt>
