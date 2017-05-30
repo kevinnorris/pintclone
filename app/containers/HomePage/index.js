@@ -70,39 +70,25 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
     }
   )
 
-  handelTwitterLogin = () => {
-    popupTools.popup('/auth/twitter', 'Twitter Connect', {}, (err, response) => {
-      if (err) {
-        this.props.authUserError({ error: err.message });
-      } else {
-        if (response.success) {
-          console.log(response.user);
-          this.props.authUserSuccess({ token: response.token, user: response.user, expiresIn: response.expiresIn });
-          auth.saveCookie(response.token, response.user, response.expiresIn);
-          this.props.toggleModal();
+  handelLogin = (isTwitter) => (
+    () => {
+      const name = isTwitter ? 'twitter' : 'github';
+      popupTools.popup(`/auth/${name}`, `${name} connect`, {}, (err, response) => {
+        if (err) {
+          this.props.authUserError({ error: err.message });
         } else {
-          this.props.authUserError({ error: response.error });
+          if (response.success) {
+            console.log(response.user);
+            this.props.authUserSuccess({ token: response.token, user: response.user, expiresIn: response.expiresIn });
+            auth.saveCookie(response.token, response.user, response.expiresIn);
+            this.props.toggleModal();
+          } else {
+            this.props.authUserError({ error: response.error });
+          }
         }
-      }
-    });
-  }
-
-  handelGithubLogin = () => {
-    popupTools.popup('/auth/github', 'Github Connect', {}, (err, response) => {
-      if (err) {
-        this.props.authUserError({ error: err.message });
-      } else {
-        if (response.success) {
-          console.log(response.user);
-          this.props.authUserSuccess({ token: response.token, user: response.user, expiresIn: response.expiresIn });
-          auth.saveCookie(response.token, response.user, response.expiresIn);
-          this.props.toggleModal();
-        } else {
-          this.props.authUserError({ error: response.error });
-        }
-      }
-    });
-  }
+      });
+    }
+  )
 
   logout = () => {
     this.props.logoutUser();
@@ -137,11 +123,11 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
             <Logo>P</Logo>
             <ModalTitle>{this.props.isSignup ? 'Sign up to see more' : 'Log in to see more'}</ModalTitle>
             <GithubButton
-              onClick={this.handelGithubLogin}
+              onClick={this.handelLogin(false)}
               text={this.props.isSignup ? 'Sign in with Github' : 'Log in with Github'}
             />
             <TwitterButton
-              onClick={this.handelTwitterLogin}
+              onClick={this.handelLogin(true)}
               text={this.props.isSignup ? 'Sign in with Twitter' : 'Log in with Twitter'}
             />
             {this.props.error ?
