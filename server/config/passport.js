@@ -33,19 +33,29 @@ module.exports = (passport) => {
           }
 
           // Add new user
-          db.users.add([profile.id, profile.username, profile.displayname])
-            .then((newUser) => (
-              done(null, newUser)
-            ))
+          console.log(`githubId: ${profile.id}, username: ${profile.username}, displayName: ${profile.displayName}, avatar: ${profile._json.avatar_url}`);
+          db.users.add([profile.id, profile.username, profile.displayName, profile._json.avatar_url])
+            .then((newUserId) => {
+              console.log('saving new user');
+              const newUser = {
+                id: newUserId,
+                githubId: profile.id,
+                username: profile.username,
+                displayName: profile.displayName,
+                avatarUrl: profile._json.avatar_url,
+              };
+              return done(null, newUser);
+            })
             .catch((err) => {
-              console.log('problem adding user');
+              console.log('problem saving user');
               console.log(err);
               throw err;
             });
         })
-        .catch((error) => (
-          done(error.message || error)
-        ));
+        .catch((error) => {
+          console.log('final catch returning error');
+          return done(error.message || error);
+        });
     });
   }));
 };

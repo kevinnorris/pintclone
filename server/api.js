@@ -27,6 +27,9 @@ function GET(url, handler) {
 
 // Debugging Routes
 
+// Get users
+GET('/users', db.users.all);
+
 // create table Users:
 GET('/users/create', db.users.create);
 
@@ -40,7 +43,7 @@ GET('/users/empty', db.users.empty);
 GET('/users/drop', db.users.drop);
 
 // add a new user with username:
-GET('/users/add/:username', (req) => db.users.add([req.query.githubId, req.params.username, req.query.displayname]));
+GET('/users/add/:username', (req) => db.users.add([req.query.githubId, req.params.username, req.query.displayname, req.query.avatarUrl]));
 
 // find a user with id:
 GET('/users/find/:id', (req) => db.users.find(req.params.id));

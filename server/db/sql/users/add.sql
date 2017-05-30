@@ -4,6 +4,6 @@
     to pre-format SQL with static formatting parameters when needs to be.
 */
 
-INSERT INTO ${schema~}.Users(githubId, username, displayname)
-VALUES($1, $2, $3)
-RETURNING (id, githubId, username, displayname)
+INSERT INTO ${schema~}.Users(githubId, username, displayname, avatarUrl)
+VALUES($1, $2, $3, $4)
+RETURNING id

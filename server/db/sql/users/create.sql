@@ -9,5 +9,6 @@ CREATE TABLE ${schema~}.Users
     id serial PRIMARY KEY,
     githubId text,
     username text NOT NULL,
-    displayname text
+    displayname text,
+    avatarUrl text
 );

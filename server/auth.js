@@ -23,7 +23,8 @@ authRoutes.get('/github/callback', passport.authenticate('github'), (req, res) =
   return res.end(popupTools.popupResponse({
     success: true,
     token,
-    user: req.user.id,
+    user: req.user,
+    expiresIn: 14400000,
   }));
 });
 
