@@ -1,0 +1,1 @@
+TRUNCATE TABLE ${schema~}.Pictures CASCADE;

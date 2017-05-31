@@ -44,4 +44,23 @@ module.exports = {
     findByGithubId: sql('users/findByGithubId.sql'),
     findByTwitterId: sql('users/findByTwitterId.sql'),
   },
+  pictures: {
+    create: sql('pictures/create.sql'),
+    empty: sql('pictures/empty.sql'),
+    init: sql('pictures/init.sql'),
+    drop: sql('pictures/drop.sql'),
+    add: sql('pictures/add.sql'),
+    find: sql('pictures/find.sql'),
+    findByOwnerId: sql('pictures/findByOwnerId.sql'),
+  },
+  likes: {
+    create: sql('likes/create.sql'),
+    empty: sql('likes/empty.sql'),
+    init: sql('likes/init.sql'),
+    drop: sql('likes/drop.sql'),
+    add: sql('likes/add.sql'),
+    find: sql('likes/find.sql'),
+    findByPictureId: sql('likes/findByPictureId.sql'),
+    findByUserId: sql('likes/findByUserId.sql'),
+  },
 };
