@@ -30,11 +30,24 @@ const AppName = styled.p`
   font-family: ${fontFamily};
 `;
 
+const SmallHeaderButton = styled(HeaderButton)`
+  width: 96px;
+  height: 30px;
+`;
+
 function Header({ loggedIn, logout, showModal }) {
   let ButtonGroup = (
     <ItemWrapper>
       <HeaderButton main onClick={showModal(true)}>Signup</HeaderButton>
       <HeaderButton onClick={showModal(false)}>Login</HeaderButton>
+    </ItemWrapper>
+  );
+  let LogoGroup = (
+    <ItemWrapper>
+      <Logo to="/">
+        P
+      </Logo>
+      <AppName>Pintclone</AppName>
     </ItemWrapper>
   );
   if (loggedIn) {
@@ -43,17 +56,21 @@ function Header({ loggedIn, logout, showModal }) {
         <HeaderButton onClick={logout}>Logout</HeaderButton>
       </ItemWrapper>
     );
+    LogoGroup = (
+      <ItemWrapper>
+        <Logo to="/">
+          P
+        </Logo>
+        <SmallHeaderButton>My Pics</SmallHeaderButton>
+        <SmallHeaderButton>Add Pic</SmallHeaderButton>
+      </ItemWrapper>
+    );
   }
   return (
     <Wrapper>
       <div className="container">
         <InnerWrapper>
-          <ItemWrapper>
-            <Logo to="/">
-              P
-            </Logo>
-            <AppName>Pintclone</AppName>
-          </ItemWrapper>
+          {LogoGroup}
           {ButtonGroup}
         </InnerWrapper>
       </div>
