@@ -34,20 +34,11 @@ module.exports = (passport) => {
             isTwitter ? null : profile.id,
             isTwitter ? profile.id : null,
             profile.username,
-            profile.displayname,
+            profile.displayName,
             isTwitter ? profile._json.profile_image_url : profile._json.avatar_url,
           ])
-            .then((newUserId) => {
+            .then((newUser) => {
               console.log('saving new user');
-              const newUser = {
-                id: newUserId,
-                githubid: isTwitter ? null : profile.id,
-                twitterid: isTwitter ? profile.id : null,
-                username: profile.username,
-                displayname: profile.displayName,
-                avatarurl: isTwitter ? profile._json.profile_image_url : profile._json.avatar_url,
-              };
-
               return done(null, newUser);
             });
         })

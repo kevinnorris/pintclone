@@ -23,9 +23,9 @@ module.exports = (rep, pgp) => (
     empty: () =>
         rep.none(sql.empty),
 
-    // Adds a new user, and returns the new id;
+    // Adds a new user, and returns the user;
     add: (params) =>
-        rep.one(sql.add, params, (user) => user.id),
+        rep.one(sql.add, params, (user) => user),
 
     // Tries to delete a user by id, and returns the number of records deleted;
     remove: (id) =>
