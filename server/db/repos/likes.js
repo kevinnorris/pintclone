@@ -18,6 +18,10 @@ module.exports = (rep, pgp) => (
     add: (params) =>
         rep.one(sql.add, params, (like) => like.id),
 
+    // Delete picture by id;
+    delete: (id) =>
+        rep.oneOrNone(sql.delete, id),
+
     // Tries to find a like from id;
     find: (id) =>
         rep.oneOrNone(sql.find, id),

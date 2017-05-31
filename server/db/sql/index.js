@@ -45,6 +45,7 @@ module.exports = {
     findByTwitterId: sql('users/findByTwitterId.sql'),
   },
   pictures: {
+    delete: sql('pictures/delete.sql'),
     create: sql('pictures/create.sql'),
     empty: sql('pictures/empty.sql'),
     init: sql('pictures/init.sql'),
@@ -54,6 +55,7 @@ module.exports = {
     findByOwnerId: sql('pictures/findByOwnerId.sql'),
   },
   likes: {
+    delete: sql('likes/delete.sql'),
     create: sql('likes/create.sql'),
     empty: sql('likes/empty.sql'),
     init: sql('likes/init.sql'),
