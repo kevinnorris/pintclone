@@ -5,6 +5,8 @@ import {
   REQUEST_PICTURES,
   REQUEST_PICTURES_SUCCESS,
   REQUEST_PICTURES_ERROR,
+  SELECT_PICTURE,
+  UNSELECT_PICTURE,
 } from './constants';
 
 export function toggleModal() {
@@ -42,5 +44,18 @@ export function requestPicturesError(payload) {
   return {
     type: REQUEST_PICTURES_ERROR,
     payload,
+  };
+}
+
+export function selectPicture(payload) {
+  return {
+    type: SELECT_PICTURE,
+    payload,
+  };
+}
+
+export function unselectPicture() {
+  return {
+    type: UNSELECT_PICTURE,
   };
 }

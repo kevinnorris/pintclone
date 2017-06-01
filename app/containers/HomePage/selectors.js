@@ -23,10 +23,16 @@ const makeSelectPictures = () => createSelector(
   (HomePageState) => HomePageState.get('pictures')
 );
 
+const makeSelectActivePicture = () => createSelector(
+  selectHomePageDomain(),
+  (HomePageState) => HomePageState.get('activePicture')
+);
+
 export default selectHomePageDomain;
 export {
   selectHomePageDomain,
   makeSelectShowModal,
   makeSelectIsSignup,
   makeSelectPictures,
+  makeSelectActivePicture,
 };

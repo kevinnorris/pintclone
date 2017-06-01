@@ -12,8 +12,20 @@ import { authUserSuccess, authUserError, logoutUser } from 'containers/App/actio
 
 import Header from './Header';
 import AuthModal from './AuthModal';
-import { toggleModal, setModalSignup, setModalLogin, requestPictures } from './actions';
-import { makeSelectShowModal, makeSelectIsSignup, makeSelectPictures } from './selectors';
+import {
+  toggleModal,
+  setModalSignup,
+  setModalLogin,
+  requestPictures,
+  selectPicture,
+  unselectPicture,
+} from './actions';
+import {
+  makeSelectShowModal,
+  makeSelectIsSignup,
+  makeSelectPictures,
+  makeSelectActivePicture,
+} from './selectors';
 
 class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   componentWillMount() {
@@ -89,6 +101,7 @@ HomePage.propTypes = {
   showModal: PropTypes.bool.isRequired,
   isSignup: PropTypes.bool.isRequired,
   pictures: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
+  activePicture: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   token: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   userData: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
@@ -99,12 +112,15 @@ HomePage.propTypes = {
   authUserSuccess: PropTypes.func.isRequired,
   authUserError: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
+  selectPicture: PropTypes.func.isRequired,
+  unselectPicture: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   showModal: makeSelectShowModal(),
   isSignup: makeSelectIsSignup(),
   pictures: makeSelectPictures(),
+  activePicture: makeSelectActivePicture(),
   error: makeSelectError(),
   token: makeSelectToken(),
   userData: makeSelectUserData(),
@@ -119,7 +135,8 @@ function mapDispatchToProps(dispatch) {
     authUserSuccess: (payload) => dispatch(authUserSuccess(payload)),
     authUserError: (payload) => dispatch(authUserError(payload)),
     logoutUser: () => dispatch(logoutUser()),
-
+    selectPicture: (payload) => dispatch(selectPicture(payload)),
+    unselectPicture: () => dispatch(unselectPicture()),
   };
 }
 

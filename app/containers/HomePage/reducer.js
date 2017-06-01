@@ -6,6 +6,8 @@ import {
   REQUEST_PICTURES,
   REQUEST_PICTURES_SUCCESS,
   REQUEST_PICTURES_ERROR,
+  SELECT_PICTURE,
+  UNSELECT_PICTURE,
 } from './constants';
 
 const initialState = fromJS({
@@ -14,6 +16,7 @@ const initialState = fromJS({
   fetching: false,
   pictures: false,
   error: false,
+  activePicture: false,
 });
 
 function homePageReducer(state = initialState, action) {
@@ -40,6 +43,12 @@ function homePageReducer(state = initialState, action) {
       return state
         .set('fetching', false)
         .set('error', action.payload.error);
+    case SELECT_PICTURE:
+      return state
+        .set('activePicture', action.payload.picture);
+    case UNSELECT_PICTURE:
+      return state
+        .set('activePicture', false);
     default:
       return state;
   }
