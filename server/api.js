@@ -76,16 +76,16 @@ function POST(url, handler) {
 GET('/pictures', db.pictures.all);
 
 // Get pictures by userId
-GET('/pictures/:userId', (req) => db.pictures.findByOwnerId(req.params.userid));
+GET('/pictures/byUserId/:userId', (req) => db.pictures.findByOwnerId(req.params.userid));
 
 // Add a picture
-POST('/pictures/:imgUrl', (req) => db.pictures.add([req.body.userId, req.params.imgUrl]));
+POST('/pictures/add/:imgUrl', (req) => db.pictures.add([req.body.userId, req.params.imgUrl]));
 
 // Remove a picture
 POST('/pictures/delete/:pictureId', (req) => db.pictures.delete(req.params.pictureId));
 
 // Add a like
-POST('/likes/:pictureId', (req) => db.likes.add(req.params.pictureId, req.body.userId));
+POST('/likes/add/:pictureId', (req) => db.likes.add(req.params.pictureId, req.body.userId));
 
 // Remove a like
 POST('/likes/delete/:likeId', (req) => db.likes.delete(req.params.likeId));
@@ -112,5 +112,16 @@ GET('/users/add/:username', (req) => db.users.add([req.query.githubId, req.param
 
 // find a user with id:
 GET('/users/find/:id', (req) => db.users.find(req.params.id));
+
+GET('/pictures/create', db.pictures.create);
+GET('/pictures/init', db.pictures.init);
+GET('/pictures/empty', db.pictures.empty);
+GET('/pictures/drop', db.pictures.drop);
+
+GET('/likes', db.likes.all);
+GET('/likes/create', db.likes.create);
+// GET('/likes/init', db.likes.init);
+GET('/likes/empty', db.likes.empty);
+GET('/likes/drop', db.likes.drop);
 
 module.exports = apiRoutes;
