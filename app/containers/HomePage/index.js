@@ -1,9 +1,3 @@
-/*
- * HomePage
- *
- * This is the first thing users see of our App, at the '/' route
- */
-
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
@@ -17,10 +11,14 @@ import { authUserSuccess, authUserError, logoutUser } from 'containers/App/actio
 
 import Header from './Header';
 import AuthModal from './AuthModal';
-import { toggleModal, setModalSignup, setModalLogin } from './actions';
+import { toggleModal, setModalSignup, setModalLogin, requestPictures } from './actions';
 import { makeSelectShowModal, makeSelectIsSignup } from './selectors';
 
 class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  componentWillMount() {
+    this.props.requestPictures();
+  }
+
   showModal = (isSignup) => (
     () => {
       if (isSignup) {
@@ -94,6 +92,7 @@ HomePage.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   setModalSignup: PropTypes.func.isRequired,
   setModalLogin: PropTypes.func.isRequired,
+  requestPictures: PropTypes.func.isRequired,
   authUserSuccess: PropTypes.func.isRequired,
   authUserError: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
@@ -112,6 +111,7 @@ function mapDispatchToProps(dispatch) {
     toggleModal: () => dispatch(toggleModal()),
     setModalSignup: () => dispatch(setModalSignup()),
     setModalLogin: () => dispatch(setModalLogin()),
+    requestPictures: () => dispatch(requestPictures()),
     authUserSuccess: (payload) => dispatch(authUserSuccess(payload)),
     authUserError: (payload) => dispatch(authUserError(payload)),
     logoutUser: () => dispatch(logoutUser()),
