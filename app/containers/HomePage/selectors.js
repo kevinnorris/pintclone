@@ -18,9 +18,15 @@ const makeSelectIsSignup = () => createSelector(
   (HomePageState) => HomePageState.get('isSignup')
 );
 
+const makeSelectPictures = () => createSelector(
+  selectHomePageDomain(),
+  (HomePageState) => HomePageState.get('pictures')
+);
+
 export default selectHomePageDomain;
 export {
   selectHomePageDomain,
   makeSelectShowModal,
   makeSelectIsSignup,
+  makeSelectPictures,
 };

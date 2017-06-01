@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import popupTools from 'popup-tools';
 
 import * as auth from 'containers/App/auth';
+import PictureGrid from 'components/PictureGrid';
 
 import { makeSelectError, makeSelectToken, makeSelectUserData } from 'containers/App/selectors';
 import { authUserSuccess, authUserError, logoutUser } from 'containers/App/actions';
@@ -12,7 +13,7 @@ import { authUserSuccess, authUserError, logoutUser } from 'containers/App/actio
 import Header from './Header';
 import AuthModal from './AuthModal';
 import { toggleModal, setModalSignup, setModalLogin, requestPictures } from './actions';
-import { makeSelectShowModal, makeSelectIsSignup } from './selectors';
+import { makeSelectShowModal, makeSelectIsSignup, makeSelectPictures } from './selectors';
 
 class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   componentWillMount() {
@@ -68,6 +69,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
         <h1>
           Home Page
         </h1>
+        <PictureGrid pictures={this.props.pictures ? this.props.pictures.toJS() : this.props.pictures} />
         <AuthModal
           show={this.props.showModal}
           isSignup={this.props.isSignup}
@@ -86,6 +88,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
 HomePage.propTypes = {
   showModal: PropTypes.bool.isRequired,
   isSignup: PropTypes.bool.isRequired,
+  pictures: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   token: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   userData: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
@@ -101,6 +104,7 @@ HomePage.propTypes = {
 const mapStateToProps = createStructuredSelector({
   showModal: makeSelectShowModal(),
   isSignup: makeSelectIsSignup(),
+  pictures: makeSelectPictures(),
   error: makeSelectError(),
   token: makeSelectToken(),
   userData: makeSelectUserData(),
