@@ -1,6 +1,6 @@
 CREATE TABLE ${schema~}.Likes
 (
     id serial PRIMARY KEY,
-    userId number NOT NULL,
-    pictureId number NOT NULL
+    userId int NOT NULL,
+    pictureId int NOT NULL
 );

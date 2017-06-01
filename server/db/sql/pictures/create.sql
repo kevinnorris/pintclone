@@ -1,6 +1,6 @@
 CREATE TABLE ${schema~}.Pictures
 (
     id serial PRIMARY KEY,
-    ownerId number NOT NULL,
+    ownerId int NOT NULL,
     imgUrl text NOT NULL
 );
