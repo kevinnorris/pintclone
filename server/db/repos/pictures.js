@@ -1,10 +1,14 @@
-const sql = require('../sql').users;
+const sql = require('../sql').pictures;
 
 module.exports = (rep, pgp) => (
   {
     // Creates the table;
     create: () =>
         rep.none(sql.create),
+
+    // Initializes the table with some user records, and return their id-s;
+    init: () =>
+        rep.map(sql.init, [], (row) => row.id),
 
     // Drops the table;
     drop: () =>

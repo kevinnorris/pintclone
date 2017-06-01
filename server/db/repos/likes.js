@@ -1,4 +1,4 @@
-const sql = require('../sql').users;
+const sql = require('../sql').likes;
 
 module.exports = (rep, pgp) => (
   {
@@ -36,10 +36,10 @@ module.exports = (rep, pgp) => (
 
     // Returns all like records;
     all: () =>
-        rep.any('SELECT * FROM Pictures'),
+        rep.any('SELECT * FROM Likes'),
 
     // Returns the total number of like;
     total: () =>
-        rep.one('SELECT count(*) FROM Pictures', [], (a) => +a.count),
+        rep.one('SELECT count(*) FROM Likes', [], (a) => +a.count),
   }
 );
