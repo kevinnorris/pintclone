@@ -2,23 +2,22 @@ import React from 'react';
 import Masonry from 'react-masonry-component';
 import styled from 'styled-components';
 
+import Pin from 'components/Pin';
+
 const masonryOptions = {
   transitionDuration: 0,
 };
-
-const GridImg = styled.img`
-  width: 250px;
-`;
 
 function PictureGrid({ pictures }) {
   let pics;
   if (pictures) {
     pics = pictures.map((element) => (
-      (
-        <div key={element.id}>
-          <GridImg src={element.imgurl} />
-        </div>
-      )
+      <Pin
+        key={element.id}
+        id={element.id}
+        title={element.title}
+        imgurl={element.imgurl}
+      />
     ));
   }
   return (

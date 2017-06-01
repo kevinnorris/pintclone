@@ -12,11 +12,13 @@ export const nonMainHighlight = '#f5f3f3';
 export const inactive = '#717171';
 
 // used as the border for the picture on hover
-export const outline = '#d1d1d1';
+export const outline = '#F3F3F3';
 
 export const titleColor = '#434343';
 
 export const helpTextColor = '#555555';
+
+export const pinTitleColor = '#444444';
 
 export const imgborderRadius = '8px';
 export const btnBorderRadius = '4px';

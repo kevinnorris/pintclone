@@ -6,3 +6,6 @@ export const REQUEST_PICTURES = 'app/HomePage/REQUEST_PICTURES';
 export const REQUEST_PICTURES_SUCCESS = 'app/HomePage/REQUEST_PICTURES_SUCCESS';
 export const REQUEST_PICTURES_ERROR = 'app/HomePage/REQUEST_PICTURES_ERROR';
 
+export const SELECT_PICTURE = 'app/HomePage/SELECT_PICTURE';
+export const UNSELECT_PICTURE = 'app/HomePage/UNSELECT_PICTURE';
+
