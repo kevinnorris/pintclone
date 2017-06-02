@@ -68,5 +68,7 @@ module.exports = {
   joined: {
     pictures: sql('joined/pictures.sql'),
     picturesAuth: sql('joined/picturesAuth.sql'),
+    picturesByUser: sql('joined/picturesByUser.sql'),
+    picturesAuthByUser: sql('joined/picturesAuthByUser.sql'),
   },
 };

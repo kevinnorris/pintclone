@@ -11,4 +11,5 @@ LEFT JOIN (
   SELECT pictureId
   FROM ${schema~}.Likes
   WHERE userId=$1
-) userLiked ON userLiked.pictureId=pic.id;
+) userLiked ON userLiked.pictureId=pic.id
+WHERE pic.ownerId=$2;

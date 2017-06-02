@@ -9,5 +9,11 @@ module.exports = (rep, pgp) => (
 
     picturesAuth: (id) =>
       rep.any(sql.picturesAuth, id),
+
+    picturesByUser: (id) =>
+      rep.any(sql.picturesByUser, id),
+
+    picturesAuthByUser: (id, userId) =>
+      rep.any(sql.picturesAuthByUser, [id, userId]),
   }
 );

@@ -73,10 +73,20 @@ function POST(url, handler) {
 // ------------ API Routes ------------
 
 // Get joined pictures
-GET('/joinedPictures', db.joined.pictures);
+GET('/joinedPictures', (req) => {
+  if (req.query.userId) {
+    return db.joined.picturesAuth(req.query.userId);
+  }
+  return db.joined.pictures();
+});
 
-// Get joined pictures with user like  info
-GET('/joinedPicturesAuth', (req) => db.joined.picturesAuth(req.query.userId));
+// Get joined pictures by user
+GET('/joinedPicturesByUser/:userId', (req) => {
+  if (req.query.userId) {
+    return db.joined.picturesAuthByUser(req.query.userId, req.params.userId);
+  }
+  return db.joined.picturesByUser(req.params.userId);
+});
 
 // Get pictures
 GET('/pictures', db.pictures.all);
