@@ -6,6 +6,10 @@ module.exports = (rep, pgp) => (
     create: () =>
         rep.none(sql.create),
 
+    // Initializes the table with some Likes records, and return their id's;
+    init: () =>
+        rep.map(sql.init, [], (row) => row.id),
+
     // Drops the table;
     drop: () =>
         rep.none(sql.drop),

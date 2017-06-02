@@ -65,4 +65,8 @@ module.exports = {
     findByPictureId: sql('likes/findByPictureId.sql'),
     findByUserId: sql('likes/findByUserId.sql'),
   },
+  joined: {
+    pictures: sql('joined/pictures.sql'),
+    picturesAuth: sql('joined/picturesAuth.sql'),
+  },
 };

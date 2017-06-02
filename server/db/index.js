@@ -1,6 +1,7 @@
 const users = require('./repos/users');
 const pictures = require('./repos/pictures');
 const likes = require('./repos/likes');
+const joined = require('./repos/joined');
 
 // Loading all the database repositories separately,
 // because event 'extend' is called multiple times:
@@ -8,6 +9,7 @@ const repos = {
   users,
   pictures,
   likes,
+  joined,
 };
 
 // pg-promise initialization options:
@@ -19,6 +21,7 @@ const options = {
     obj.users = repos.users(obj, pgp);
     obj.pictures = repos.pictures(obj, pgp);
     obj.likes = repos.likes(obj, pgp);
+    obj.joined = repos.joined(obj, pgp);
     // Alternatively, you can set all repositories in a loop:
     //
     // for (var r in repos) {

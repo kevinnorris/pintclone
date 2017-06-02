@@ -72,11 +72,17 @@ function POST(url, handler) {
 
 // ------------ API Routes ------------
 
+// Get joined pictures
+GET('/joinedPictures', db.joined.pictures);
+
+// Get joined pictures with user like  info
+GET('/joinedPicturesAuth', (req) => db.joined.picturesAuth(req.query.userId));
+
 // Get pictures
 GET('/pictures', db.pictures.all);
 
 // Get pictures by userId
-GET('/pictures/byUserId/:userId', (req) => db.pictures.findByOwnerId(req.params.userid));
+GET('/pictures/byUserId/:userId', (req) => db.pictures.findByOwnerId(req.params.userId));
 
 // Add a picture
 POST('/pictures/add/:imgUrl', (req) => db.pictures.add([req.body.userId, req.params.imgUrl]));
@@ -120,7 +126,7 @@ GET('/pictures/drop', db.pictures.drop);
 
 GET('/likes', db.likes.all);
 GET('/likes/create', db.likes.create);
-// GET('/likes/init', db.likes.init);
+GET('/likes/init', db.likes.init);
 GET('/likes/empty', db.likes.empty);
 GET('/likes/drop', db.likes.drop);
 
