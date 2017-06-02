@@ -9,10 +9,11 @@
     https://github.com/vitaly-t/pg-promise/wiki/Performance-Boost
 */
 
-INSERT INTO ${schema~}.Users(githubId, username, displayname) VALUES
-(1, 'Demo User 1', 'frist'), -- user 1;
-(2, 'Demo User 2', 'second'), -- user 2;
-(3, 'Demo User 3', 'third'), -- user 3;
-(4, 'Demo User 4', NULL), -- user 4;
-(NULL, 'Demo User 5', NULL) -- user 5;
+INSERT INTO ${schema~}.Users(githubId, twitterId, username, displayname, avatarUrl) VALUES
+(1, null, 'DemoUser1', 'D User 1', ''),
+(387566, null, 'DemoUser2', 'D User 2', ''),
+(9456, null, 'DemoUser3', 'D User 3', ''),
+(null, 559846, 'DemoUser4', 'D User 4', ''),
+(null, 384958, 'DemoUser5', 'D User 5', ''),
+(null, 1293847, 'DemoUser6', 'D User 6', '')
 RETURNING id
