@@ -8,6 +8,27 @@ const masonryOptions = {
   transitionDuration: 0,
 };
 
+const Wrapper = styled.div`
+  margin: 0 auto;
+  width: 1200px;
+
+  @media (max-width: 1249px) {
+    width: 1000px;
+  }
+
+  @media (max-width: 999px) {
+    width: 750px;
+  }
+
+  @media (max-width: 749px) {
+    width: 500px;
+  }
+
+  @media (max-width: 499px) {
+    width: 250px;
+  }
+`;
+
 function PictureGrid({ pictures }) {
   let pics;
   if (pictures) {
@@ -17,11 +38,14 @@ function PictureGrid({ pictures }) {
         id={element.id}
         title={element.title}
         imgurl={element.imgurl}
+        username={element.username}
+        userThumbnail={element.avatarurl}
+        likes={element.likecount}
       />
     ));
   }
   return (
-    <div>
+    <Wrapper>
       {pics ?
         <Masonry
           options={masonryOptions}
@@ -32,7 +56,7 @@ function PictureGrid({ pictures }) {
         </Masonry> :
         null
       }
-    </div>
+    </Wrapper>
   );
 }
 
