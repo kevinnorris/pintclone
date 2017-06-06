@@ -6,6 +6,7 @@ import popupTools from 'popup-tools';
 
 import * as auth from 'containers/App/auth';
 import PictureGrid from 'components/PictureGrid';
+import PictureModal from 'components/PictureModal';
 
 import { makeSelectError, makeSelectToken, makeSelectUserData } from 'containers/App/selectors';
 import { authUserSuccess, authUserError, logoutUser } from 'containers/App/actions';
@@ -13,16 +14,18 @@ import { authUserSuccess, authUserError, logoutUser } from 'containers/App/actio
 import Header from './Header';
 import AuthModal from './AuthModal';
 import {
-  toggleModal,
+  toggleAuthModal,
   setModalSignup,
   setModalLogin,
+  togglePicModal,
   requestPictures,
   selectPicture,
   unselectPicture,
 } from './actions';
 import {
-  makeSelectShowModal,
+  makeSelectShowAuthModal,
   makeSelectIsSignup,
+  makeSelectShowPicModal,
   makeSelectPictures,
   makeSelectActivePicture,
 } from './selectors';
@@ -39,7 +42,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
       } else {
         this.props.setModalLogin();
       }
-      this.props.toggleModal();
+      this.props.toggleAuthModal();
     }
   )
 
@@ -54,7 +57,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
             console.log(response.user);
             this.props.authUserSuccess({ token: response.token, user: response.user, expiresIn: response.expiresIn });
             auth.saveCookie(response.token, response.user, response.expiresIn);
-            this.props.toggleModal();
+            this.props.toggleAuthModal();
           } else {
             this.props.authUserError({ error: response.error });
           }
@@ -68,6 +71,13 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
     auth.logout();
   }
 
+  handelImgClick = (pic) => (
+    () => {
+      this.props.selectPicture({ picture: pic });
+      this.props.togglePicModal();
+    }
+  )
+
   render() {
     return (
       <div>
@@ -78,16 +88,24 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
           ]}
         />
         <Header loggedIn={!!this.props.token} logout={this.logout} showModal={this.showModal} />
-        <PictureGrid pictures={this.props.pictures ? this.props.pictures.toJS() : this.props.pictures} />
+        <PictureGrid
+          pictures={this.props.pictures ? this.props.pictures.toJS() : this.props.pictures}
+          handelImgClick={this.handelImgClick}
+        />
         <AuthModal
-          show={this.props.showModal}
+          show={this.props.showAuthModal}
           isSignup={this.props.isSignup}
           error={this.props.error}
-          toggleModal={this.props.toggleModal}
+          toggleModal={this.props.toggleAuthModal}
           twitterLogin={this.handelLogin(true)}
           githubLogin={this.handelLogin(false)}
           setModalLogin={this.props.setModalLogin}
           setModalSignup={this.props.setModalSignup}
+        />
+        <PictureModal
+          show={this.props.showPicModal}
+          toggleModal={this.props.togglePicModal}
+          activePicture={this.props.activePicture}
         />
       </div>
     );
@@ -95,16 +113,18 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
 }
 
 HomePage.propTypes = {
-  showModal: PropTypes.bool.isRequired,
+  showAuthModal: PropTypes.bool.isRequired,
   isSignup: PropTypes.bool.isRequired,
+  showPicModal: PropTypes.bool.isRequired,
   pictures: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
   activePicture: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   token: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   userData: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
-  toggleModal: PropTypes.func.isRequired,
+  toggleAuthModal: PropTypes.func.isRequired,
   setModalSignup: PropTypes.func.isRequired,
   setModalLogin: PropTypes.func.isRequired,
+  togglePicModal: PropTypes.func.isRequired,
   requestPictures: PropTypes.func.isRequired,
   authUserSuccess: PropTypes.func.isRequired,
   authUserError: PropTypes.func.isRequired,
@@ -114,8 +134,9 @@ HomePage.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  showModal: makeSelectShowModal(),
+  showAuthModal: makeSelectShowAuthModal(),
   isSignup: makeSelectIsSignup(),
+  showPicModal: makeSelectShowPicModal(),
   pictures: makeSelectPictures(),
   activePicture: makeSelectActivePicture(),
   error: makeSelectError(),
@@ -125,9 +146,10 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    toggleModal: () => dispatch(toggleModal()),
+    toggleAuthModal: () => dispatch(toggleAuthModal()),
     setModalSignup: () => dispatch(setModalSignup()),
     setModalLogin: () => dispatch(setModalLogin()),
+    togglePicModal: () => dispatch(togglePicModal()),
     requestPictures: () => dispatch(requestPictures()),
     authUserSuccess: (payload) => dispatch(authUserSuccess(payload)),
     authUserError: (payload) => dispatch(authUserError(payload)),

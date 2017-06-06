@@ -8,14 +8,19 @@ const selectHomePageDomain = () => (state) => state.get('homePage');
 /**
  * Other specific selectors
  */
-const makeSelectShowModal = () => createSelector(
+const makeSelectShowAuthModal = () => createSelector(
   selectHomePageDomain(),
-  (HomePageState) => HomePageState.get('showModal')
+  (HomePageState) => HomePageState.get('showAuthModal')
 );
 
 const makeSelectIsSignup = () => createSelector(
   selectHomePageDomain(),
   (HomePageState) => HomePageState.get('isSignup')
+);
+
+const makeSelectShowPicModal = () => createSelector(
+  selectHomePageDomain(),
+  (HomePageState) => HomePageState.get('showPicModal')
 );
 
 const makeSelectPictures = () => createSelector(
@@ -31,8 +36,9 @@ const makeSelectActivePicture = () => createSelector(
 export default selectHomePageDomain;
 export {
   selectHomePageDomain,
-  makeSelectShowModal,
+  makeSelectShowAuthModal,
   makeSelectIsSignup,
+  makeSelectShowPicModal,
   makeSelectPictures,
   makeSelectActivePicture,
 };

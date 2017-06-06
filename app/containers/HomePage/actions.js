@@ -1,7 +1,8 @@
 import {
-  TOGGLE_MODAL,
+  TOGGLE_AUTH_MODAL,
   SET_MODAL_SIGNUP,
   SET_MODAL_LOGIN,
+  TOGGLE_PIC_MODAL,
   REQUEST_PICTURES,
   REQUEST_PICTURES_SUCCESS,
   REQUEST_PICTURES_ERROR,
@@ -9,9 +10,9 @@ import {
   UNSELECT_PICTURE,
 } from './constants';
 
-export function toggleModal() {
+export function toggleAuthModal() {
   return {
-    type: TOGGLE_MODAL,
+    type: TOGGLE_AUTH_MODAL,
   };
 }
 
@@ -24,6 +25,12 @@ export function setModalSignup() {
 export function setModalLogin() {
   return {
     type: SET_MODAL_LOGIN,
+  };
+}
+
+export function togglePicModal() {
+  return {
+    type: TOGGLE_PIC_MODAL,
   };
 }
 

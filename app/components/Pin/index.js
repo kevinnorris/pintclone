@@ -73,13 +73,13 @@ const Likes = styled.span`
 const UserLink = styled.a`cursor: pointer;`;
 
 
-function Pin({ id, title, imgurl, username, userThumbnail, likes, liked }) {
+function Pin({ id, title, imgurl, username, userThumbnail, likes, liked, handelImgClick }) {
   return (
     <Wrapper>
       <Likes active={liked}>
         <p><span className="glyphicon glyphicon-heart" aria-hidden="true"></span> {likes || 0}</p>
       </Likes>
-      <PinImg src={imgurl} alt={title} />
+      <PinImg src={imgurl} alt={title} onClick={handelImgClick({ id, title, imgurl, username, userThumbnail, likes, liked })} />
       <Title>{title}</Title>
       <UserLink href="#">
         {userThumbnail ? <Thumbnail src={userThumbnail} alt={username} /> : null}
@@ -97,6 +97,7 @@ Pin.propTypes = {
   userThumbnail: React.PropTypes.string,
   likes: React.PropTypes.string,
   liked: React.PropTypes.bool,
+  handelImgClick: React.PropTypes.func.isRequired,
 };
 
 export default Pin;

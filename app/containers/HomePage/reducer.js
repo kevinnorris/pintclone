@@ -1,8 +1,9 @@
 import { fromJS } from 'immutable';
 import {
-  TOGGLE_MODAL,
+  TOGGLE_AUTH_MODAL,
   SET_MODAL_SIGNUP,
   SET_MODAL_LOGIN,
+  TOGGLE_PIC_MODAL,
   REQUEST_PICTURES,
   REQUEST_PICTURES_SUCCESS,
   REQUEST_PICTURES_ERROR,
@@ -11,7 +12,8 @@ import {
 } from './constants';
 
 const initialState = fromJS({
-  showModal: false,
+  showAuthModal: false,
+  showPicModal: false,
   isSignup: false,
   fetching: false,
   pictures: false,
@@ -21,15 +23,18 @@ const initialState = fromJS({
 
 function homePageReducer(state = initialState, action) {
   switch (action.type) {
-    case TOGGLE_MODAL:
+    case TOGGLE_AUTH_MODAL:
       return state
-        .set('showModal', !state.get('showModal'));
+        .set('showAuthModal', !state.get('showAuthModal'));
     case SET_MODAL_LOGIN:
       return state
         .set('isSignup', false);
     case SET_MODAL_SIGNUP:
       return state
         .set('isSignup', true);
+    case TOGGLE_PIC_MODAL:
+      return state
+        .set('showPicModal', !state.get('showPicModal'));
     case REQUEST_PICTURES:
       return state
         .set('fetching', true)
