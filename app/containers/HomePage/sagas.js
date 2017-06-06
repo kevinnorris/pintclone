@@ -12,7 +12,7 @@ export function* allPicturesSaga(action) {
   const userId = yield select(makeSelectUserId());
 
   // Build request URL based on if user is authenticated
-  let requestUrl = `${appUrl}/api/pictures?`;
+  let requestUrl = `${appUrl}/api/joinedPictures?`;
   if (token && userId) {
     requestUrl += `token=${token}&&userId=${userId}`;
   }

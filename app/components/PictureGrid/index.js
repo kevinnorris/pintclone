@@ -41,6 +41,7 @@ function PictureGrid({ pictures }) {
         username={element.username}
         userThumbnail={element.avatarurl}
         likes={element.likecount}
+        liked={element.liked}
       />
     ));
   }

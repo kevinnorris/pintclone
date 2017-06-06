@@ -78,9 +78,6 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
           ]}
         />
         <Header loggedIn={!!this.props.token} logout={this.logout} showModal={this.showModal} />
-        <h1>
-          Home Page
-        </h1>
         <PictureGrid pictures={this.props.pictures ? this.props.pictures.toJS() : this.props.pictures} />
         <AuthModal
           show={this.props.showModal}
