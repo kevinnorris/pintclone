@@ -4,8 +4,16 @@ import { Modal, ModalBody, ModalFooter } from 'react-bootstrap';
 import { helpTextColor } from 'utils/colors';
 import HeaderButton from 'components/HeaderButton';
 
-const PModal = styled(Modal)`color: ${helpTextColor};`;
-const PModalBody = styled(ModalBody)`padding: 5px;`;
+const PModal = styled(Modal)`
+  color: ${helpTextColor};
+
+
+`;
+const PModalBody = styled(ModalBody)`
+  position: relative;
+  padding: 5px;
+  text-align: center;
+`;
 
 const PicModalFooter = styled(ModalFooter)`
   text-align: center;
@@ -43,24 +51,36 @@ const Pic = styled.img`
 `;
 const Title = styled.h3`margin: 5px 0 10px 0;`;
 
-function PictureModal({ show, toggleModal, activePicture }) {
-  return (
-    <PModal show={show} onHide={toggleModal}>
-      <PModalBody>
-        <Pic src={activePicture.imgurl} alt={activePicture.title} />
-      </PModalBody>
-      <PicModalFooter>
-        <Title>{activePicture.title}</Title>
-        <UserLink href="#">
-          <AvatarThumbnail src={activePicture.userThumbnail} />
-          <ModalFooterTxt>{activePicture.username}</ModalFooterTxt>
-        </UserLink>
-        <PicModalFooterBtn main={activePicture.liked}>
-          <span className="glyphicon glyphicon-heart" aria-hidden="true" /> {activePicture.likes ? activePicture.likes : 0}
-        </PicModalFooterBtn>
-      </PicModalFooter>
-    </PModal>
-  );
+class PictureModal extends React.PureComponent {
+  componentDidUpdate() {
+    if (this.props.activePicture) {
+      const pictureModalImg = document.getElementById('pictureModalImg');
+      // If natural image size is smaller than client, resize image
+      if (pictureModalImg.clientWidth > pictureModalImg.naturalWidth) {
+        pictureModalImg.style.width = `${pictureModalImg.naturalWidth}px`;
+      }
+    }
+  }
+
+  render() {
+    return (
+      <PModal show={this.props.show} onHide={this.props.toggleModal}>
+        <PModalBody>
+          <Pic id="pictureModalImg" src={this.props.activePicture.imgurl} alt={this.props.activePicture.title} />
+        </PModalBody>
+        <PicModalFooter>
+          <Title>{this.props.activePicture.title}</Title>
+          <UserLink href="#">
+            <AvatarThumbnail src={this.props.activePicture.userThumbnail} />
+            <ModalFooterTxt>{this.props.activePicture.username}</ModalFooterTxt>
+          </UserLink>
+          <PicModalFooterBtn main={this.props.activePicture.liked}>
+            <span className="glyphicon glyphicon-heart" aria-hidden="true" /> {this.props.activePicture.likes ? this.props.activePicture.likes : 0}
+          </PicModalFooterBtn>
+        </PicModalFooter>
+      </PModal>
+    );
+  }
 }
 
 PictureModal.propTypes = {
