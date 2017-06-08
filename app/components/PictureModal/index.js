@@ -6,12 +6,15 @@ import HeaderButton from 'components/HeaderButton';
 
 const PModal = styled(Modal)`
   color: ${helpTextColor};
-
-
+  
+  .modal-dialog {
+    margin-left: auto;
+    margin-right: auto; 
+  }
 `;
 const PModalBody = styled(ModalBody)`
   position: relative;
-  padding: 5px;
+  padding: 0;
   text-align: center;
 `;
 
@@ -46,6 +49,7 @@ const AvatarThumbnail = styled.img`
 `;
 
 const Pic = styled.img`
+  border-radius: 5px 5px 0 0;
   width: 100%;
   height: auto;
 `;
@@ -54,18 +58,27 @@ const Title = styled.h3`margin: 5px 0 10px 0;`;
 class PictureModal extends React.PureComponent {
   componentDidUpdate() {
     if (this.props.activePicture) {
-      const pictureModalImg = document.getElementById('pictureModalImg');
-      // If natural image size is smaller than client, resize image
-      if (pictureModalImg.clientWidth > pictureModalImg.naturalWidth) {
-        pictureModalImg.style.width = `${pictureModalImg.naturalWidth}px`;
-      }
+      const modal = document.getElementById('modal');
+      const modalDialog = modal.getElementsByClassName('modal-dialog')[0];
+      const img = document.getElementById('pictureModalImg');
+      const viewWidth = window.innerWidth;
+      const threshold = 768;
+      // Set max size of image based on screen size
+      const maxImgWidth = viewWidth > threshold ? viewWidth * 0.8 : viewWidth * 0.95;
+      console.log(maxImgWidth);
+      // Determine img width
+      const imgWidth = img.naturalWidth > maxImgWidth ? maxImgWidth : img.naturalWidth;
+      console.log(imgWidth);
+      // Set new width for img and modalDialog
+      img.style.width = `${imgWidth}px`;
+      modalDialog.style.width = `${imgWidth + 2}px`;
     }
   }
 
   // TODO: does not update on activepicture property changes, fix
   render() {
     return (
-      <PModal show={this.props.show} onHide={this.props.toggleModal}>
+      <PModal id="modal" show={this.props.show} onHide={this.props.toggleModal}>
         <PModalBody>
           <Pic id="pictureModalImg" src={this.props.activePicture.imgurl} alt={this.props.activePicture.title} />
         </PModalBody>
