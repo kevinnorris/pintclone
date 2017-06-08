@@ -8,6 +8,9 @@ import {
   REQUEST_PICTURES_ERROR,
   SELECT_PICTURE,
   UNSELECT_PICTURE,
+  REQUEST_LIKE_TOGGLE,
+  SUCCESS_LIKE_TOGGLE,
+  ERROR_LIKE_TOGGLE,
 } from './constants';
 
 export function toggleAuthModal() {
@@ -64,5 +67,26 @@ export function selectPicture(payload) {
 export function unselectPicture() {
   return {
     type: UNSELECT_PICTURE,
+  };
+}
+
+export function likeToggle(payload) {
+  return {
+    type: REQUEST_LIKE_TOGGLE,
+    payload,
+  };
+}
+
+export function likeToggleError(payload) {
+  return {
+    type: ERROR_LIKE_TOGGLE,
+    payload,
+  };
+}
+
+export function likeToggleSuccess(payload) {
+  return {
+    type: SUCCESS_LIKE_TOGGLE,
+    payload,
   };
 }

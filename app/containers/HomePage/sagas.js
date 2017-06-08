@@ -3,9 +3,15 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 
 import request from 'utils/request';
 import { appUrl } from 'utils/constants';
+import { AUTHENTICATE_USER_SUCCESS } from 'containers/App/constants';
 import { makeSelectToken, makeSelectUserId } from 'containers/App/selectors';
-import { REQUEST_PICTURES } from './constants';
-import { requestPicturesSuccess, requestPicturesError } from './actions';
+import { REQUEST_PICTURES, REQUEST_LIKE_TOGGLE } from './constants';
+import {
+  requestPicturesSuccess,
+  requestPicturesError,
+  likeToggleError,
+  likeToggleSuccess,
+} from './actions';
 
 export function* allPicturesSaga(action) {
   const token = yield select(makeSelectToken());
@@ -30,7 +36,41 @@ export function* allPicturesSaga(action) {
 }
 
 export function* allPicturesWatcher() {
-  const watcher = yield takeLatest(REQUEST_PICTURES, allPicturesSaga);
+  const watcher = yield takeLatest([REQUEST_PICTURES, AUTHENTICATE_USER_SUCCESS], allPicturesSaga);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+}
+
+export function* likeSaga(action) {
+  const token = yield select(makeSelectToken());
+  const userId = yield select(makeSelectUserId());
+
+  let requestUrl = `${appUrl}/api/likes/`;
+  if (action.payload.liked) {
+    requestUrl += 'delete/';
+  } else {
+    requestUrl += 'add/';
+  }
+  requestUrl += action.payload.pictureId;
+  try {
+    const addLike = yield call(request, requestUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token, userId }),
+    });
+    if (addLike.success) {
+      yield put(likeToggleSuccess({ picId: action.payload.pictureId }));
+    } else {
+      yield put(likeToggleError({ error: addLike.error }));
+    }
+  } catch (error) {
+    yield put(likeToggleError({ error: error.response }));
+  }
+}
+
+export function* likeWatcher() {
+  const watcher = yield takeLatest(REQUEST_LIKE_TOGGLE, likeSaga);
 
   yield take(LOCATION_CHANGE);
   yield cancel(watcher);
@@ -39,4 +79,5 @@ export function* allPicturesWatcher() {
 // All sagas to be loaded
 export default [
   allPicturesWatcher,
+  likeWatcher,
 ];

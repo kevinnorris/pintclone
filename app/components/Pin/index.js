@@ -8,7 +8,7 @@ import {
   main,
   btnBorderRadius,
   inactive,
-  background
+  background,
 } from 'utils/colors';
 
 const PinImg = styled.img`
@@ -30,7 +30,7 @@ const Wrapper = styled.div`
   &:hover{
     background: ${outline};
 
-    span {
+    button {
       visibility: visible;
     }
   }
@@ -50,7 +50,7 @@ const Thumbnail = styled.img`
   margin-right: 10px;
 `;
 
-const Likes = styled.span`
+const Likes = styled.button`
   visibility: hidden;
   position: absolute;
   top: 10px;
@@ -73,11 +73,11 @@ const Likes = styled.span`
 const UserLink = styled.a`cursor: pointer;`;
 
 
-function Pin({ id, title, imgurl, username, userThumbnail, likes, liked, handelImgClick }) {
+function Pin({ id, title, imgurl, username, userThumbnail, likes, liked, handelImgClick, handelLikeClick }) {
   return (
     <Wrapper>
-      <Likes active={liked}>
-        <p><span className="glyphicon glyphicon-heart" aria-hidden="true"></span> {likes || 0}</p>
+      <Likes active={liked} onClick={handelLikeClick(id, !!liked)} >
+        <span className="glyphicon glyphicon-heart" aria-hidden="true"></span> {likes || 0}
       </Likes>
       <PinImg src={imgurl} alt={title} onClick={handelImgClick({ id, title, imgurl, username, userThumbnail, likes, liked })} />
       <Title>{title}</Title>
@@ -95,9 +95,10 @@ Pin.propTypes = {
   imgurl: React.PropTypes.string.isRequired,
   username: React.PropTypes.string.isRequired,
   userThumbnail: React.PropTypes.string,
-  likes: React.PropTypes.string,
+  likes: React.PropTypes.number,
   liked: React.PropTypes.bool,
   handelImgClick: React.PropTypes.func.isRequired,
+  handelLikeClick: React.PropTypes.func.isRequired,
 };
 
 export default Pin;

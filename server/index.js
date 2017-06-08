@@ -2,6 +2,7 @@
 require('dotenv').config();
 const express = require('express');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 const logger = require('./logger');
 const api = require('./api');
 const auth = require('./auth');
@@ -26,6 +27,10 @@ if (app.get('env') === 'production') {
   sess.cookie.secure = true; // serve secure cookies
 }
 app.use(session(sess));
+
+// add body parsing
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 // add passport.js
 require('./config/passport')(passport);

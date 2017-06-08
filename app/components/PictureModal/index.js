@@ -62,6 +62,7 @@ class PictureModal extends React.PureComponent {
     }
   }
 
+  // TODO: does not update on activepicture property changes, fix
   render() {
     return (
       <PModal show={this.props.show} onHide={this.props.toggleModal}>
@@ -74,7 +75,7 @@ class PictureModal extends React.PureComponent {
             <AvatarThumbnail src={this.props.activePicture.userThumbnail} />
             <ModalFooterTxt>{this.props.activePicture.username}</ModalFooterTxt>
           </UserLink>
-          <PicModalFooterBtn main={this.props.activePicture.liked}>
+          <PicModalFooterBtn main={this.props.activePicture.liked} onClick={this.props.handelLikeClick(this.props.activePicture.id, !!this.props.activePicture.liked)}>
             <span className="glyphicon glyphicon-heart" aria-hidden="true" /> {this.props.activePicture.likes ? this.props.activePicture.likes : 0}
           </PicModalFooterBtn>
         </PicModalFooter>
@@ -87,6 +88,7 @@ PictureModal.propTypes = {
   show: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired,
   activePicture: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
+  handelLikeClick: PropTypes.func.isRequired,
 };
 
 export default PictureModal;

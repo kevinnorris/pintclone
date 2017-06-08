@@ -1,4 +1,5 @@
 import { fromJS } from 'immutable';
+import { LOGOUT_USER } from 'containers/App/constants';
 import {
   TOGGLE_AUTH_MODAL,
   SET_MODAL_SIGNUP,
@@ -9,6 +10,9 @@ import {
   REQUEST_PICTURES_ERROR,
   SELECT_PICTURE,
   UNSELECT_PICTURE,
+  REQUEST_LIKE_TOGGLE,
+  SUCCESS_LIKE_TOGGLE,
+  ERROR_LIKE_TOGGLE,
 } from './constants';
 
 const initialState = fromJS({
@@ -16,6 +20,7 @@ const initialState = fromJS({
   showPicModal: false,
   isSignup: false,
   fetching: false,
+  fetchingLike: false,
   pictures: false,
   error: false,
   activePicture: false,
@@ -54,6 +59,35 @@ function homePageReducer(state = initialState, action) {
     case UNSELECT_PICTURE:
       return state
         .set('activePicture', false);
+    case REQUEST_LIKE_TOGGLE:
+      return state
+        .set('fetchingLike', true)
+        .set('error', false);
+    case SUCCESS_LIKE_TOGGLE: {
+      const picIndex = state.get('pictures').findIndex((picture) => +picture.get('id') === action.payload.picId);
+      const liked = state.getIn(['pictures', picIndex, 'liked']);
+      const likecount = state.getIn(['pictures', picIndex, 'likecount']);
+      return state
+        .set('fetchingLike', false)
+        // Update liked
+        .setIn(
+          ['pictures', picIndex, 'liked'],
+          !liked,
+        )
+        // Update number of likes
+        .setIn(
+         ['pictures', picIndex, 'likecount'],
+          liked ? +likecount - 1 : +likecount + 1,
+        );
+    }
+        // set picture with id = payload.picId liked to oposit of what it is
+    case ERROR_LIKE_TOGGLE:
+      return state
+        .set('fetchingLike', false)
+        .set('error', action.payload.error);
+    case LOGOUT_USER:
+      return state
+        .set('pictures', state.get('pictures').map((picture) => picture.set('liked', false)));
     default:
       return state;
   }

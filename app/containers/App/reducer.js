@@ -28,7 +28,7 @@ if (cookie) {
   initialState = initialState
     .set('token', cookie.token)
     .set('expireDate', cookie.expireDate)
-    .set('userId', cookie.user.userId)
+    .set('userId', cookie.userId)
     .setIn(['userData', 'username'], cookie.user.username)
     .setIn(['userData', 'displayname'], cookie.user.displayname)
     .setIn(['userData', 'githubId'], cookie.user.githubid)

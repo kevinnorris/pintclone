@@ -1,3 +1,3 @@
-INSERT INTO ${schema~}.Likes(pictureId, userId)
+INSERT INTO ${schema~}.Likes(userId, pictureId)
 VALUES($1, $2)
-RETURNING id
+RETURNING *

@@ -101,10 +101,10 @@ POST('/pictures/add/:imgUrl', (req) => db.pictures.add([req.body.userId, req.par
 POST('/pictures/delete/:pictureId', (req) => db.pictures.delete(req.params.pictureId));
 
 // Add a like
-POST('/likes/add/:pictureId', (req) => db.likes.add(req.params.pictureId, req.body.userId));
+POST('/likes/add/:pictureId', (req) => db.likes.add(req.body.userId, req.params.pictureId));
 
 // Remove a like
-POST('/likes/delete/:likeId', (req) => db.likes.delete(req.params.likeId));
+POST('/likes/delete/:pictureId', (req) => db.likes.delete(req.body.userId, req.params.pictureId));
 
 // ------------ Debugging Routes ------------
 

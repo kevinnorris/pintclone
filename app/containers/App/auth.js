@@ -7,8 +7,8 @@ const localStorageString = 'pintclone-FCC';
  * @param {object} user
  * @param {number} expiresIn
  */
-export function saveCookie(token, user, expiresIn) {
-  const cookie = { token, user };
+export function saveCookie(token, userId, user, expiresIn) {
+  const cookie = { token, userId, user };
   cookie.expireDate = Date.now() + expiresIn;
   localStorage.setItem(localStorageString, JSON.stringify(cookie));
   return cookie;

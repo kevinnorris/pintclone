@@ -19,12 +19,12 @@ module.exports = (rep, pgp) => (
         rep.none(sql.empty),
 
     // Adds a new like, and returns the new id;
-    add: (params) =>
-        rep.one(sql.add, params, (like) => like.id),
+    add: (userId, pictureId) =>
+        rep.one(sql.add, [userId, pictureId], (like) => like.id),
 
-    // Delete picture by id;
-    delete: (id) =>
-        rep.oneOrNone(sql.delete, id),
+    // Delete picture by userId and pictureId;
+    delete: (userId, pictureId) =>
+        rep.oneOrNone(sql.delete, [userId, pictureId], (like) => like.pictureId),
 
     // Tries to find a like from id;
     find: (id) =>

@@ -21,6 +21,7 @@ import {
   requestPictures,
   selectPicture,
   unselectPicture,
+  likeToggle,
 } from './actions';
 import {
   makeSelectShowAuthModal,
@@ -54,9 +55,8 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
           this.props.authUserError({ error: err.message });
         } else {
           if (response.success) {
-            console.log(response.user);
             this.props.authUserSuccess({ token: response.token, user: response.user, expiresIn: response.expiresIn });
-            auth.saveCookie(response.token, response.user, response.expiresIn);
+            auth.saveCookie(response.token, response.user.id, response.user, response.expiresIn);
             this.props.toggleAuthModal();
           } else {
             this.props.authUserError({ error: response.error });
@@ -78,6 +78,16 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
     }
   )
 
+  handelLikeClick = (pictureId, hasLiked) => (
+    () => {
+      if (this.props.token) {
+        this.props.likeToggle({ pictureId, liked: hasLiked });
+      } else {
+        // Prompt login
+      }
+    }
+  )
+
   render() {
     return (
       <div>
@@ -91,6 +101,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
         <PictureGrid
           pictures={this.props.pictures ? this.props.pictures.toJS() : this.props.pictures}
           handelImgClick={this.handelImgClick}
+          handelLikeClick={this.handelLikeClick}
         />
         <AuthModal
           show={this.props.showAuthModal}
@@ -106,6 +117,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
           show={this.props.showPicModal}
           toggleModal={this.props.togglePicModal}
           activePicture={this.props.activePicture}
+          handelLikeClick={this.handelLikeClick}
         />
       </div>
     );
@@ -120,7 +132,6 @@ HomePage.propTypes = {
   activePicture: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   token: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
-  userData: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
   toggleAuthModal: PropTypes.func.isRequired,
   setModalSignup: PropTypes.func.isRequired,
   setModalLogin: PropTypes.func.isRequired,
@@ -131,6 +142,7 @@ HomePage.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   selectPicture: PropTypes.func.isRequired,
   unselectPicture: PropTypes.func.isRequired,
+  likeToggle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -141,7 +153,6 @@ const mapStateToProps = createStructuredSelector({
   activePicture: makeSelectActivePicture(),
   error: makeSelectError(),
   token: makeSelectToken(),
-  userData: makeSelectUserData(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -156,6 +167,7 @@ function mapDispatchToProps(dispatch) {
     logoutUser: () => dispatch(logoutUser()),
     selectPicture: (payload) => dispatch(selectPicture(payload)),
     unselectPicture: () => dispatch(unselectPicture()),
+    likeToggle: (payload) => dispatch(likeToggle(payload)),
   };
 }
 

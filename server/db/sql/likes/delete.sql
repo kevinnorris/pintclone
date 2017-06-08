@@ -1,3 +1,3 @@
 DELETE FROM ${schema~}.Likes
-WHERE id = $1
-RETURNING id
+WHERE userId = $1 AND pictureId = $2
+RETURNING *
