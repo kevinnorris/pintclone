@@ -12,7 +12,8 @@ import {
 } from 'utils/colors';
 
 const PinImg = styled.img`
-  width: 240px;
+  display: block;
+  width: 360px;
   border-radius: 6px;
 
   &:hover{
@@ -25,7 +26,7 @@ const Wrapper = styled.div`
   padding: 5px;
   background: white;
   border-radius: 8px;
-  text-align: center;
+  // text-align: center;
 
   &:hover{
     background: ${outline};
@@ -70,7 +71,16 @@ const Likes = styled.button`
   }
 `;
 
-const UserLink = styled.a`cursor: pointer;`;
+const UserLink = styled.a`
+  cursor: pointer;
+  color: ${inactive};
+  text-decoration: none;
+
+  &:hover {
+    color: ${inactive};
+    text-decoration: none;
+  }
+`;
 
 
 function Pin({ id, title, imgurl, username, userThumbnail, likes, liked, handelImgClick, handelLikeClick }) {
@@ -80,10 +90,8 @@ function Pin({ id, title, imgurl, username, userThumbnail, likes, liked, handelI
         <span className="glyphicon glyphicon-heart" aria-hidden="true"></span> {likes || 0}
       </Likes>
       <PinImg src={imgurl} alt={title} onClick={handelImgClick({ id, title, imgurl, username, userThumbnail, likes, liked })} />
-      <Title>{title}</Title>
       <UserLink href="#">
-        {userThumbnail ? <Thumbnail src={userThumbnail} alt={username} /> : null}
-        {username}
+        By {username}
       </UserLink>
     </Wrapper>
   );

@@ -12,7 +12,7 @@ export const nonMainHighlight = '#f5f3f3';
 export const inactive = '#717171';
 
 // used as the border for the picture on hover
-export const outline = '#F3F3F3';
+export const outline = '#dadada';
 
 export const titleColor = '#434343';
 
