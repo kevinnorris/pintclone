@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import HeaderButton from 'components/HeaderButton';
 import { background, fontFamily } from 'utils/colors';
 import Logo from 'components/Logo';
+import HeaderButtonSmall from 'components/HeaderButtonSmall';
+import AddPicPopover from 'components/AddPicPopover';
 
 const Wrapper = styled.div`
   background: ${background};
@@ -31,12 +33,7 @@ const AppName = styled.p`
   font-family: ${fontFamily};
 `;
 
-const SmallHeaderButton = styled(HeaderButton)`
-  width: 96px;
-  height: 30px;
-`;
-
-function Header({ loggedIn, logout, showModal }) {
+function Header({ loggedIn, logout, showModal, addPic, error, fetching }) {
   let ButtonGroup = (
     <ItemWrapper>
       <HeaderButton main onClick={showModal(true)}>Signup</HeaderButton>
@@ -62,8 +59,12 @@ function Header({ loggedIn, logout, showModal }) {
         <Logo to="/">
           P
         </Logo>
-        <SmallHeaderButton>My Pics</SmallHeaderButton>
-        <SmallHeaderButton>Add Pic</SmallHeaderButton>
+        <HeaderButtonSmall>My Pics</HeaderButtonSmall>
+        <AddPicPopover
+          error={error}
+          fetching={fetching}
+          addPic={addPic}
+        />
       </ItemWrapper>
     );
   }
@@ -83,6 +84,9 @@ Header.propTypes = {
   loggedIn: React.PropTypes.bool.isRequired,
   logout: React.PropTypes.func.isRequired,
   showModal: React.PropTypes.func.isRequired,
+  addPic: React.PropTypes.func.isRequired,
+  error: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.string]),
+  fetching: React.PropTypes.bool.isRequired,
 };
 
 export default Header;

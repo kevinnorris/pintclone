@@ -4,13 +4,15 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import request from 'utils/request';
 import { appUrl } from 'utils/constants';
 import { AUTHENTICATE_USER_SUCCESS } from 'containers/App/constants';
-import { makeSelectToken, makeSelectUserId } from 'containers/App/selectors';
-import { REQUEST_PICTURES, REQUEST_LIKE_TOGGLE } from './constants';
+import { makeSelectToken, makeSelectUserId, makeSelectUserData } from 'containers/App/selectors';
+import { REQUEST_PICTURES, REQUEST_LIKE_TOGGLE, REQUEST_ADD_PICTURE } from './constants';
 import {
   requestPicturesSuccess,
   requestPicturesError,
   likeToggleError,
   likeToggleSuccess,
+  successAddPicture,
+  errorAddPicture,
 } from './actions';
 
 export function* allPicturesSaga(action) {
@@ -76,8 +78,46 @@ export function* likeWatcher() {
   yield cancel(watcher);
 }
 
+export function* addPicSaga(action) {
+  const token = yield select(makeSelectToken());
+  const userId = yield select(makeSelectUserId());
+  const userData = yield select(makeSelectUserData());
+
+  const requestUrl = `${appUrl}/api/pictures/add`;
+
+  try {
+    const addPicture = yield call(request, requestUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token, imgUrl: action.payload.imgUrl, userId, title: action.payload.title }),
+    });
+    if (addPicture.success) {
+      // Add all required properties to the new picture
+      const newPicture = addPicture.data;
+      newPicture.username = userData.username;
+      newPicture.avatarurl = userData.avatarUrl;
+      newPicture.likeCount = 0;
+      newPicture.liked = false;
+
+      yield put(successAddPicture({ picture: newPicture }));
+    } else {
+      yield put(errorAddPicture({ error: addPicture.error }));
+    }
+  } catch (error) {
+    yield put(errorAddPicture({ error: error.response }));
+  }
+}
+
+export function* addPicWatcher() {
+  const watcher = yield takeLatest(REQUEST_ADD_PICTURE, addPicSaga);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+}
+
 // All sagas to be loaded
 export default [
   allPicturesWatcher,
   likeWatcher,
+  addPicWatcher,
 ];

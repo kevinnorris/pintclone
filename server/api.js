@@ -18,7 +18,7 @@ function tokenVerify(req, res, next) {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         res.json({ success: false, error: err.message });
-      } else if (decoded.sub === userId) {
+      } else if (decoded.sub === +userId) { // set userId to number so that can test with postman
         // if all is well, save to request for use in other routes
         req.decoded = decoded;
         next();
@@ -95,7 +95,7 @@ GET('/pictures', db.pictures.all);
 GET('/pictures/byUserId/:userId', (req) => db.pictures.findByOwnerId(req.params.userId));
 
 // Add a picture
-POST('/pictures/add/:imgUrl', (req) => db.pictures.add([req.body.userId, req.params.imgUrl]));
+POST('/pictures/add/', (req) => db.pictures.add([req.body.userId, req.body.imgUrl, req.body.title]));
 
 // Remove a picture
 POST('/pictures/delete/:pictureId', (req) => db.pictures.delete(req.params.pictureId));

@@ -29,6 +29,8 @@ const makeSelectUserData = () => createSelector(
     username: globalState.getIn(['userData', 'username']),
     displayname: globalState.getIn(['userData', 'displayname']),
     githubId: globalState.getIn(['userData', 'githubId']),
+    twitterId: globalState.getIn(['userData', 'twitterId']),
+    avatarUrl: globalState.getIn(['userData', 'avatarUrl']),
   })
 );
 

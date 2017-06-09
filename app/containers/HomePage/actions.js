@@ -11,6 +11,9 @@ import {
   REQUEST_LIKE_TOGGLE,
   SUCCESS_LIKE_TOGGLE,
   ERROR_LIKE_TOGGLE,
+  REQUEST_ADD_PICTURE,
+  SUCCESS_ADD_PICTURE,
+  ERROR_ADD_PICTURE,
 } from './constants';
 
 export function toggleAuthModal() {
@@ -87,6 +90,27 @@ export function likeToggleError(payload) {
 export function likeToggleSuccess(payload) {
   return {
     type: SUCCESS_LIKE_TOGGLE,
+    payload,
+  };
+}
+
+export function requestAddPicture(payload) {
+  return {
+    type: REQUEST_ADD_PICTURE,
+    payload,
+  };
+}
+
+export function successAddPicture(payload) {
+  return {
+    type: SUCCESS_ADD_PICTURE,
+    payload,
+  };
+}
+
+export function errorAddPicture(payload) {
+  return {
+    type: ERROR_ADD_PICTURE,
     payload,
   };
 }

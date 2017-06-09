@@ -14,3 +14,7 @@ export const UNSELECT_PICTURE = 'app/HomePage/UNSELECT_PICTURE';
 export const REQUEST_LIKE_TOGGLE = 'app/HomePage/REQUEST_LIKE_TOGGLE';
 export const SUCCESS_LIKE_TOGGLE = 'app/HomePage/SUCCESS_LIKE_TOGGLE';
 export const ERROR_LIKE_TOGGLE = 'app/HomePage/ERROR_LIKE_TOGGLE';
+
+export const REQUEST_ADD_PICTURE = 'app/HomePage/REQUEST_ADD_PICTURE';
+export const SUCCESS_ADD_PICTURE = 'app/HomePage/SUCCESS_ADD_PICTURE';
+export const ERROR_ADD_PICTURE = 'app/HomePage/ERROR_ADD_PICTURE';

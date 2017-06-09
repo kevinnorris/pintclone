@@ -33,6 +33,16 @@ const makeSelectActivePicture = () => createSelector(
   (HomePageState) => HomePageState.get('activePicture')
 );
 
+const makeSelectAddPicError = () => createSelector(
+  selectHomePageDomain(),
+  (HomePageState) => HomePageState.get('addPicError')
+);
+
+const makeSelectAddPicFetching = () => createSelector(
+  selectHomePageDomain(),
+  (HomePageState) => HomePageState.get('addPicFetching')
+);
+
 export default selectHomePageDomain;
 export {
   selectHomePageDomain,
@@ -41,4 +51,6 @@ export {
   makeSelectShowPicModal,
   makeSelectPictures,
   makeSelectActivePicture,
+  makeSelectAddPicError,
+  makeSelectAddPicFetching,
 };

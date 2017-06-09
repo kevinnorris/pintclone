@@ -18,9 +18,9 @@ module.exports = (rep, pgp) => (
     empty: () =>
         rep.none(sql.empty),
 
-    // Adds a new picture, and returns the new id;
+    // Adds a new picture, and returns the new picture;
     add: (params) =>
-        rep.one(sql.add, params, (picture) => picture.id),
+        rep.one(sql.add, params, (picture) => picture),
 
     // Delete picture by id;
     delete: (id) =>

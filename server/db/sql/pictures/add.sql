@@ -1,3 +1,3 @@
-INSERT INTO ${schema~}.Pictures(ownerId, imgUrl)
-VALUES($1, $2)
-RETURNING id
+INSERT INTO ${schema~}.Pictures(ownerId, imgUrl, title)
+VALUES($1, $2, $3)
+RETURNING *

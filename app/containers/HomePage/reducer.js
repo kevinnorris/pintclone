@@ -13,6 +13,9 @@ import {
   REQUEST_LIKE_TOGGLE,
   SUCCESS_LIKE_TOGGLE,
   ERROR_LIKE_TOGGLE,
+  REQUEST_ADD_PICTURE,
+  SUCCESS_ADD_PICTURE,
+  ERROR_ADD_PICTURE,
 } from './constants';
 
 const initialState = fromJS({
@@ -24,6 +27,8 @@ const initialState = fromJS({
   pictures: false,
   error: false,
   activePicture: false,
+  addPicError: false,
+  addPicFetching: false,
 });
 
 function homePageReducer(state = initialState, action) {
@@ -99,6 +104,19 @@ function homePageReducer(state = initialState, action) {
     case LOGOUT_USER:
       return state
         .set('pictures', state.get('pictures').map((picture) => picture.set('liked', false)));
+    case REQUEST_ADD_PICTURE:
+      return state
+        .set('addPicError', false)
+        .set('addPicFetching', true);
+    case SUCCESS_ADD_PICTURE:
+      return state
+        .set('addPicFetching', false)
+        // push returned picture to pictures
+        .update('pictures', (p) => p.push(action.payload.picture));
+    case ERROR_ADD_PICTURE:
+      return state
+        .set('addPicError', action.payload.error)
+        .set('addPicFetching', false);
     default:
       return state;
   }

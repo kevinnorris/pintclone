@@ -22,6 +22,8 @@ import {
   selectPicture,
   unselectPicture,
   likeToggle,
+  requestAddPicture,
+  errorAddPicture,
 } from './actions';
 import {
   makeSelectShowAuthModal,
@@ -29,6 +31,8 @@ import {
   makeSelectShowPicModal,
   makeSelectPictures,
   makeSelectActivePicture,
+  makeSelectAddPicError,
+  makeSelectAddPicFetching,
 } from './selectors';
 
 class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -86,6 +90,14 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
     }
   )
 
+  handelAddPicture = (imgUrl, title) => {
+    if (imgUrl && title) {
+      this.props.requestAddPicture({ imgUrl, title });
+    } else {
+      this.props.errorAddPicture({ error: 'No url and or title provided' });
+    }
+  }
+
   render() {
     return (
       <div>
@@ -95,7 +107,13 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
             { name: 'description', content: 'Pinterest clone' },
           ]}
         />
-        <Header loggedIn={!!this.props.token} logout={this.logout} showModal={this.showModal} />
+        <Header
+          loggedIn={!!this.props.token}
+          logout={this.logout} showModal={this.showModal}
+          addPic={this.handelAddPicture}
+          error={this.props.addPicError}
+          fetching={this.props.addPicFetching}
+        />
         <PictureGrid
           pictures={this.props.pictures ? this.props.pictures.toJS() : this.props.pictures}
           handelImgClick={this.handelImgClick}
@@ -130,6 +148,8 @@ HomePage.propTypes = {
   activePicture: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   token: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
+  addPicError: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
+  addPicFetching: PropTypes.bool.isRequired,
   toggleAuthModal: PropTypes.func.isRequired,
   setModalSignup: PropTypes.func.isRequired,
   setModalLogin: PropTypes.func.isRequired,
@@ -141,6 +161,8 @@ HomePage.propTypes = {
   selectPicture: PropTypes.func.isRequired,
   unselectPicture: PropTypes.func.isRequired,
   likeToggle: PropTypes.func.isRequired,
+  requestAddPicture: PropTypes.func.isRequired,
+  errorAddPicture: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -149,6 +171,8 @@ const mapStateToProps = createStructuredSelector({
   showPicModal: makeSelectShowPicModal(),
   pictures: makeSelectPictures(),
   activePicture: makeSelectActivePicture(),
+  addPicError: makeSelectAddPicError(),
+  addPicFetching: makeSelectAddPicFetching(),
   error: makeSelectError(),
   token: makeSelectToken(),
 });
@@ -166,6 +190,8 @@ function mapDispatchToProps(dispatch) {
     selectPicture: (payload) => dispatch(selectPicture(payload)),
     unselectPicture: () => dispatch(unselectPicture()),
     likeToggle: (payload) => dispatch(likeToggle(payload)),
+    requestAddPicture: (payload) => dispatch(requestAddPicture(payload)),
+    errorAddPicture: (payload) => dispatch(errorAddPicture(payload)),
   };
 }
 

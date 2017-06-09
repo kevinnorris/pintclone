@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import styled from 'styled-components';
 import { Modal, ModalBody, ModalFooter } from 'react-bootstrap';
-import { helpTextColor } from 'utils/colors';
+import { helpTextColor, inactive } from 'utils/colors';
 import HeaderButton from 'components/HeaderButton';
 
 const PModal = styled(Modal)`
@@ -21,7 +21,6 @@ const PModalBody = styled(ModalBody)`
 const PicModalFooter = styled(ModalFooter)`
   text-align: center;
   padding: 5px;
-  padding-bottom: 10px;
 `;
 
 const UserLink = styled.a`
@@ -29,16 +28,24 @@ const UserLink = styled.a`
 `;
 
 const ModalFooterTxt = styled.p`
+  color: ${inactive};
   display: inline-block;
   font-size: 14px;
   font-weight: normal;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
 `;
 
 const PicModalFooterBtn = styled(HeaderButton)`
+  position: absolute;
+  left: 10px;
+  bottom: 22px;
   width: 60px;
   height: 40px;
   padding: 10px;
-  float: right;
 `;
 
 const AvatarThumbnail = styled.img`
@@ -53,7 +60,7 @@ const Pic = styled.img`
   width: 100%;
   height: auto;
 `;
-const Title = styled.h3`margin: 5px 0 10px 0;`;
+const Title = styled.h3`margin: 0 0 10px 0`;
 
 class PictureModal extends React.PureComponent {
   componentDidUpdate() {

@@ -37,20 +37,6 @@ const Wrapper = styled.div`
   }
 `;
 
-const Title = styled.p`
-  color: ${pinTitleColor};
-  padding: 4px 0;
-  margin: 0;
-  font-size: 16px;
-  font-weight: bold;
-`;
-
-const Thumbnail = styled.img`
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
-`;
-
 const Likes = styled.button`
   visibility: hidden;
   position: absolute;
