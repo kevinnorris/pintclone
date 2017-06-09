@@ -55,7 +55,7 @@ function homePageReducer(state = initialState, action) {
         .set('error', action.payload.error);
     case SELECT_PICTURE:
       return state
-        .set('activePicture', action.payload.picture);
+        .set('activePicture', fromJS(action.payload.picture));
     case UNSELECT_PICTURE:
       return state
         .set('activePicture', false);
@@ -67,18 +67,29 @@ function homePageReducer(state = initialState, action) {
       const picIndex = state.get('pictures').findIndex((picture) => +picture.get('id') === action.payload.picId);
       const liked = state.getIn(['pictures', picIndex, 'liked']);
       const likecount = state.getIn(['pictures', picIndex, 'likecount']);
-      return state
+      const newLiked = !liked;
+      const newLikes = liked ? +likecount - 1 : +likecount + 1;
+      // Update picture in state
+      let newState = state
         .set('fetchingLike', false)
         // Update liked
         .setIn(
           ['pictures', picIndex, 'liked'],
-          !liked,
+          newLiked,
         )
         // Update number of likes
         .setIn(
          ['pictures', picIndex, 'likecount'],
-          liked ? +likecount - 1 : +likecount + 1,
+          newLikes,
         );
+
+      // Update active picture if its set
+      if (newState.get('activePicture')) {
+        newState = newState
+          .setIn(['activePicture', 'liked'], newLiked)
+          .setIn(['activePicture', 'likes'], newLikes);
+      }
+      return newState;
     }
         // set picture with id = payload.picId liked to oposit of what it is
     case ERROR_LIKE_TOGGLE:

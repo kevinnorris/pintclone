@@ -59,19 +59,22 @@ class PictureModal extends React.PureComponent {
   componentDidUpdate() {
     if (this.props.activePicture) {
       const modal = document.getElementById('modal');
-      const modalDialog = modal.getElementsByClassName('modal-dialog')[0];
-      const img = document.getElementById('pictureModalImg');
-      const viewWidth = window.innerWidth;
-      const threshold = 768;
-      // Set max size of image based on screen size
-      const maxImgWidth = viewWidth > threshold ? viewWidth * 0.8 : viewWidth * 0.95;
-      console.log(maxImgWidth);
-      // Determine img width
-      const imgWidth = img.naturalWidth > maxImgWidth ? maxImgWidth : img.naturalWidth;
-      console.log(imgWidth);
-      // Set new width for img and modalDialog
-      img.style.width = `${imgWidth}px`;
-      modalDialog.style.width = `${imgWidth + 2}px`;
+      // React destorys the modal on close, if activePicture is changed it will attempt to update
+      // and will throw an error as the modal does not exists. We only want to update when the modal
+      // exists
+      if (modal) {
+        const modalDialog = modal.getElementsByClassName('modal-dialog')[0];
+        const img = document.getElementById('pictureModalImg');
+        const viewWidth = window.innerWidth;
+        const threshold = 768;
+        // Set max size of image based on screen size
+        const maxImgWidth = viewWidth > threshold ? viewWidth * 0.8 : viewWidth * 0.95;
+        // Determine img width
+        const imgWidth = img.naturalWidth > maxImgWidth ? maxImgWidth : img.naturalWidth;
+        // Set new width for img and modalDialog
+        img.style.width = `${imgWidth}px`;
+        modalDialog.style.width = `${imgWidth + 2}px`;
+      }
     }
   }
 
