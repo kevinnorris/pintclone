@@ -11,6 +11,8 @@ import {
   background,
 } from 'utils/colors';
 
+import defaultImg from './default.png';
+
 const PinImg = styled.img`
   display: block;
   width: 360px;
@@ -68,6 +70,9 @@ const UserLink = styled.a`
   }
 `;
 
+const addDefaultSrc = (ev) => {
+  ev.target.src = defaultImg;
+};
 
 function Pin({ id, title, imgurl, username, userThumbnail, likes, liked, handelImgClick, handelLikeClick }) {
   return (
@@ -75,7 +80,7 @@ function Pin({ id, title, imgurl, username, userThumbnail, likes, liked, handelI
       <Likes active={liked} onClick={handelLikeClick(id, !!liked)} >
         <span className="glyphicon glyphicon-heart" aria-hidden="true"></span> {likes || 0}
       </Likes>
-      <PinImg src={imgurl} alt={title} onClick={handelImgClick({ id, title, imgurl, username, userThumbnail, likes, liked })} />
+      <PinImg src={imgurl} onError={addDefaultSrc} alt={title} onClick={handelImgClick({ id, title, imgurl, username, userThumbnail, likes, liked })} />
       <UserLink href="#">
         By {username}
       </UserLink>
