@@ -13,6 +13,7 @@ import {
   likeToggleSuccess,
   successAddPicture,
   errorAddPicture,
+  toggleShowPopover,
 } from './actions';
 
 export function* allPicturesSaga(action) {
@@ -100,6 +101,7 @@ export function* addPicSaga(action) {
       newPicture.liked = false;
 
       yield put(successAddPicture({ picture: newPicture }));
+      yield put(toggleShowPopover());
     } else {
       yield put(errorAddPicture({ error: addPicture.error }));
     }

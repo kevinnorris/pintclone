@@ -14,6 +14,10 @@ import {
   REQUEST_ADD_PICTURE,
   SUCCESS_ADD_PICTURE,
   ERROR_ADD_PICTURE,
+  TOGGLE_POPOVER_SHOW,
+  SET_POPOVER_TARGET,
+  SET_POPOVER_IMGURL,
+  SET_POPOVER_TITLE,
 } from './constants';
 
 export function toggleAuthModal() {
@@ -111,6 +115,34 @@ export function successAddPicture(payload) {
 export function errorAddPicture(payload) {
   return {
     type: ERROR_ADD_PICTURE,
+    payload,
+  };
+}
+
+// Popover functions
+export function toggleShowPopover() {
+  return {
+    type: TOGGLE_POPOVER_SHOW,
+  };
+}
+
+export function setPopoverTarget(payload) {
+  return {
+    type: SET_POPOVER_TARGET,
+    payload,
+  };
+}
+
+export function setPopoverImgUrl(payload) {
+  return {
+    type: SET_POPOVER_IMGURL,
+    payload,
+  };
+}
+
+export function setPopoverTitle(payload) {
+  return {
+    type: SET_POPOVER_TITLE,
     payload,
   };
 }

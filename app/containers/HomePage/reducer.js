@@ -16,6 +16,10 @@ import {
   REQUEST_ADD_PICTURE,
   SUCCESS_ADD_PICTURE,
   ERROR_ADD_PICTURE,
+  TOGGLE_POPOVER_SHOW,
+  SET_POPOVER_TARGET,
+  SET_POPOVER_IMGURL,
+  SET_POPOVER_TITLE,
 } from './constants';
 
 const initialState = fromJS({
@@ -29,6 +33,10 @@ const initialState = fromJS({
   activePicture: false,
   addPicError: false,
   addPicFetching: false,
+  showPopover: false,
+  popoverTarget: false,
+  popoverImgUrl: '',
+  popoverTitle: '',
 });
 
 function homePageReducer(state = initialState, action) {
@@ -117,6 +125,18 @@ function homePageReducer(state = initialState, action) {
       return state
         .set('addPicError', action.payload.error)
         .set('addPicFetching', false);
+    case TOGGLE_POPOVER_SHOW:
+      return state
+        .set('showPopover', !state.get('showPopover'));
+    case SET_POPOVER_TARGET:
+      return state
+        .set('popoverTarget', action.payload.target);
+    case SET_POPOVER_IMGURL:
+      return state
+        .set('popoverImgUrl', action.payload.imgUrl);
+    case SET_POPOVER_TITLE:
+      return state
+        .set('popoverTitle', action.payload.title);
     default:
       return state;
   }

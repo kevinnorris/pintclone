@@ -43,6 +43,27 @@ const makeSelectAddPicFetching = () => createSelector(
   (HomePageState) => HomePageState.get('addPicFetching')
 );
 
+// Popover selectors
+const makeSelectShowPopover = () => createSelector(
+  selectHomePageDomain(),
+  (popoverState) => popoverState.get('showPopover')
+);
+
+const makeSelectPopoverTarget = () => createSelector(
+  selectHomePageDomain(),
+  (popoverState) => popoverState.get('popoverTarget')
+);
+
+const makeSelectPopoverImgUrl = () => createSelector(
+  selectHomePageDomain(),
+  (popoverState) => popoverState.get('popoverImgUrl')
+);
+
+const makeSelectPopoverTitle = () => createSelector(
+  selectHomePageDomain(),
+  (popoverState) => popoverState.get('popoverTitle')
+);
+
 export default selectHomePageDomain;
 export {
   selectHomePageDomain,
@@ -53,4 +74,8 @@ export {
   makeSelectActivePicture,
   makeSelectAddPicError,
   makeSelectAddPicFetching,
+  makeSelectShowPopover,
+  makeSelectPopoverTarget,
+  makeSelectPopoverImgUrl,
+  makeSelectPopoverTitle,
 };

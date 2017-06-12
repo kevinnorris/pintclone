@@ -74,7 +74,7 @@ class PictureModal extends React.PureComponent {
         const img = document.getElementById('pictureModalImg');
         const viewWidth = window.innerWidth;
         const threshold = 768;
-        // Set max size of image based on screen size
+        // Set max width of image based on screen size
         const maxImgWidth = viewWidth > threshold ? viewWidth * 0.8 : viewWidth * 0.95;
         // Determine img width
         const imgWidth = img.naturalWidth > maxImgWidth ? maxImgWidth : img.naturalWidth;

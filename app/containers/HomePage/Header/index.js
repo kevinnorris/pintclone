@@ -33,7 +33,21 @@ const AppName = styled.p`
   font-family: ${fontFamily};
 `;
 
-function Header({ loggedIn, logout, showModal, addPic, error, fetching }) {
+function Header({
+  loggedIn,
+  logout,
+  showModal,
+  error,
+  fetching,
+  show,
+  target,
+  imgUrl,
+  title,
+  titleChange,
+  imgUrlChange,
+  handelClick,
+  handelSubmit,
+}) {
   let ButtonGroup = (
     <ItemWrapper>
       <HeaderButton main onClick={showModal(true)}>Signup</HeaderButton>
@@ -63,7 +77,14 @@ function Header({ loggedIn, logout, showModal, addPic, error, fetching }) {
         <AddPicPopover
           error={error}
           fetching={fetching}
-          addPic={addPic}
+          show={show}
+          target={target}
+          imgUrl={imgUrl}
+          title={title}
+          titleChange={titleChange}
+          imgUrlChange={imgUrlChange}
+          handelClick={handelClick}
+          handelSubmit={handelSubmit}
         />
       </ItemWrapper>
     );
@@ -84,9 +105,16 @@ Header.propTypes = {
   loggedIn: React.PropTypes.bool.isRequired,
   logout: React.PropTypes.func.isRequired,
   showModal: React.PropTypes.func.isRequired,
-  addPic: React.PropTypes.func.isRequired,
   error: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.string]),
   fetching: React.PropTypes.bool.isRequired,
+  show: React.PropTypes.bool.isRequired,
+  target: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.object]),
+  imgUrl: React.PropTypes.string.isRequired,
+  title: React.PropTypes.string.isRequired,
+  titleChange: React.PropTypes.func.isRequired,
+  imgUrlChange: React.PropTypes.func.isRequired,
+  handelClick: React.PropTypes.func.isRequired,
+  handelSubmit: React.PropTypes.func.isRequired,
 };
 
 export default Header;

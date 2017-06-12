@@ -18,3 +18,9 @@ export const ERROR_LIKE_TOGGLE = 'app/HomePage/ERROR_LIKE_TOGGLE';
 export const REQUEST_ADD_PICTURE = 'app/HomePage/REQUEST_ADD_PICTURE';
 export const SUCCESS_ADD_PICTURE = 'app/HomePage/SUCCESS_ADD_PICTURE';
 export const ERROR_ADD_PICTURE = 'app/HomePage/ERROR_ADD_PICTURE';
+
+// Picture popover constants
+export const TOGGLE_POPOVER_SHOW = 'app/AddPicPopover/TOGGLE_POPOVER_SHOW';
+export const SET_POPOVER_TARGET = 'app/AddPicPopover/SET_POPOVER_TARGET';
+export const SET_POPOVER_IMGURL = 'app/AddPicPopover/SET_POPOVER_IMGURL';
+export const SET_POPOVER_TITLE = 'app/AddPicPopover/SET_POPOVER_TITLE';

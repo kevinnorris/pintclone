@@ -8,7 +8,7 @@ import * as auth from 'containers/App/auth';
 import PictureGrid from 'components/PictureGrid';
 import PictureModal from 'components/PictureModal';
 
-import { makeSelectError, makeSelectToken, makeSelectUserData } from 'containers/App/selectors';
+import { makeSelectError, makeSelectToken } from 'containers/App/selectors';
 import { authUserSuccess, authUserError, logoutUser } from 'containers/App/actions';
 
 import Header from './Header';
@@ -24,6 +24,10 @@ import {
   likeToggle,
   requestAddPicture,
   errorAddPicture,
+  toggleShowPopover,
+  setPopoverTarget,
+  setPopoverImgUrl,
+  setPopoverTitle,
 } from './actions';
 import {
   makeSelectShowAuthModal,
@@ -33,6 +37,10 @@ import {
   makeSelectActivePicture,
   makeSelectAddPicError,
   makeSelectAddPicFetching,
+  makeSelectShowPopover,
+  makeSelectPopoverTarget,
+  makeSelectPopoverImgUrl,
+  makeSelectPopoverTitle,
 } from './selectors';
 
 class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -90,14 +98,26 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
     }
   )
 
-  handelAddPicture = (imgUrl, title) => {
-    if (imgUrl && title) {
-      this.props.requestAddPicture({ imgUrl, title });
+  handlePopoverClick = (e) => {
+    this.props.setPopoverTarget({ target: e.target });
+    this.props.toggleShowPopover();
+  };
+
+  handelPopoverSubmit = (e) => {
+    e.preventDefault();
+    if (this.props.popoverImgUrl && this.props.popoverTitle) {
+      this.props.requestAddPicture({ imgUrl: this.props.popoverImgUrl, title: this.props.popoverTitle });
     } else {
       this.props.errorAddPicture({ error: 'No url and or title provided' });
     }
   }
 
+  popoverImgChange = (e) => {
+    this.props.setPopoverImgUrl({ imgUrl: e.target.value });
+  }
+  popoverTitleChange = (e) => {
+    this.props.setPopoverTitle({ title: e.target.value });
+  }
   render() {
     return (
       <div>
@@ -110,9 +130,16 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
         <Header
           loggedIn={!!this.props.token}
           logout={this.logout} showModal={this.showModal}
-          addPic={this.handelAddPicture}
           error={this.props.addPicError}
           fetching={this.props.addPicFetching}
+          handelClick={this.handlePopoverClick}
+          handelSubmit={this.handelPopoverSubmit}
+          target={this.props.popoverTarget}
+          show={this.props.showPopover}
+          imgUrl={this.props.popoverImgUrl}
+          title={this.props.popoverTitle}
+          imgUrlChange={this.popoverImgChange}
+          titleChange={this.popoverTitleChange}
         />
         <PictureGrid
           pictures={this.props.pictures ? this.props.pictures.toJS() : this.props.pictures}
@@ -163,6 +190,14 @@ HomePage.propTypes = {
   likeToggle: PropTypes.func.isRequired,
   requestAddPicture: PropTypes.func.isRequired,
   errorAddPicture: PropTypes.func.isRequired,
+  popoverTarget: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
+  showPopover: PropTypes.bool.isRequired,
+  popoverImgUrl: PropTypes.string.isRequired,
+  popoverTitle: PropTypes.string.isRequired,
+  toggleShowPopover: PropTypes.func.isRequired,
+  setPopoverTarget: PropTypes.func.isRequired,
+  setPopoverImgUrl: PropTypes.func.isRequired,
+  setPopoverTitle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -175,6 +210,10 @@ const mapStateToProps = createStructuredSelector({
   addPicFetching: makeSelectAddPicFetching(),
   error: makeSelectError(),
   token: makeSelectToken(),
+  popoverTarget: makeSelectPopoverTarget(),
+  showPopover: makeSelectShowPopover(),
+  popoverImgUrl: makeSelectPopoverImgUrl(),
+  popoverTitle: makeSelectPopoverTitle(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -192,6 +231,10 @@ function mapDispatchToProps(dispatch) {
     likeToggle: (payload) => dispatch(likeToggle(payload)),
     requestAddPicture: (payload) => dispatch(requestAddPicture(payload)),
     errorAddPicture: (payload) => dispatch(errorAddPicture(payload)),
+    toggleShowPopover: () => dispatch(toggleShowPopover()),
+    setPopoverTarget: (payload) => dispatch(setPopoverTarget(payload)),
+    setPopoverImgUrl: (payload) => dispatch(setPopoverImgUrl(payload)),
+    setPopoverTitle: (payload) => dispatch(setPopoverTitle(payload)),
   };
 }
 
