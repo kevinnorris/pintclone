@@ -13,6 +13,7 @@ import { authUserSuccess, authUserError, logoutUser } from 'containers/App/actio
 
 import Header from './Header';
 import AuthModal from './AuthModal';
+import UserTitle from './UserTitle';
 import {
   toggleAuthModal,
   setModalSignup,
@@ -29,6 +30,8 @@ import {
   setPopoverImgUrl,
   setPopoverTitle,
   requestDeletePicture,
+  selectUser,
+  unselectUser,
 } from './actions';
 import {
   makeSelectShowAuthModal,
@@ -42,6 +45,8 @@ import {
   makeSelectPopoverTarget,
   makeSelectPopoverImgUrl,
   makeSelectPopoverTitle,
+  makeSelectSelectedUser,
+  makeSelectUserPictures,
 } from './selectors';
 
 class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -126,6 +131,16 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
     this.props.setPopoverTitle({ title: e.target.value });
   }
   render() {
+    let pictures;
+    if (this.props.pictures) {
+      if (this.props.selectedUser) {
+        pictures = this.props.userPictures.toJS();
+      } else {
+        pictures = this.props.pictures.toJS();
+      }
+    } else {
+      pictures = this.props.pictures;
+    }
     return (
       <div>
         <Helmet
@@ -147,9 +162,14 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
           title={this.props.popoverTitle}
           imgUrlChange={this.popoverImgChange}
           titleChange={this.popoverTitleChange}
+          username={this.props.username}
         />
+        {this.props.selectedUser ?
+          <UserTitle>{this.props.selectedUser}</UserTitle> :
+          null
+        }
         <PictureGrid
-          pictures={this.props.pictures ? this.props.pictures.toJS() : this.props.pictures}
+          pictures={pictures}
           handelImgClick={this.handelImgClick}
           handelLikeClick={this.handelLikeClick}
           handelDeleteClick={this.handelDeleteClick}
@@ -208,8 +228,12 @@ HomePage.propTypes = {
   setPopoverTarget: PropTypes.func.isRequired,
   setPopoverImgUrl: PropTypes.func.isRequired,
   setPopoverTitle: PropTypes.func.isRequired,
-  username: PropTypes.string.isRequired,
+  username: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   deletePic: PropTypes.func.isRequired,
+  selectedUser: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
+  userPictures: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
+  selectUser: PropTypes.func.isRequired,
+  unselectUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -227,6 +251,8 @@ const mapStateToProps = createStructuredSelector({
   popoverImgUrl: makeSelectPopoverImgUrl(),
   popoverTitle: makeSelectPopoverTitle(),
   username: makeSelectUsername(),
+  selectedUser: makeSelectSelectedUser(),
+  userPictures: makeSelectUserPictures(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -249,6 +275,8 @@ function mapDispatchToProps(dispatch) {
     setPopoverImgUrl: (payload) => dispatch(setPopoverImgUrl(payload)),
     setPopoverTitle: (payload) => dispatch(setPopoverTitle(payload)),
     deletePic: (payload) => dispatch(requestDeletePicture(payload)),
+    selectUser: (payload) => dispatch(selectUser(payload)),
+    unselectUser: () => dispatch(unselectUser()),
   };
 }
 

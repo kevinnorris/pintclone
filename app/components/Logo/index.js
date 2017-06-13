@@ -15,7 +15,7 @@ const Logo = styled(Link)`
 
   &:hover, &:active, &:focus{
     text-decoration: none;
-    color: ${main};
+    color: white;
   }
 `;
 

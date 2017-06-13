@@ -38,6 +38,26 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/:user',
+      name: 'userPics',
+      getComponent(nextState, cb) {
+      const importModules = Promise.all([
+        import('containers/HomePage/reducer'),
+        import('containers/HomePage/sagas'),
+        import('containers/HomePage'),
+      ]);
+
+      const renderRoute = loadModule(cb);
+
+      importModules.then(([reducer, sagas, component]) => {
+        injectReducer('homePage', reducer.default);
+        injectSagas(sagas.default);
+        renderRoute(component);
+      });
+
+      importModules.catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

@@ -21,6 +21,8 @@ import {
   SET_POPOVER_TARGET,
   SET_POPOVER_IMGURL,
   SET_POPOVER_TITLE,
+  SELECT_USER,
+  UNSELECT_USER,
 } from './constants';
 
 export function toggleAuthModal() {
@@ -167,5 +169,17 @@ export function setPopoverTitle(payload) {
   return {
     type: SET_POPOVER_TITLE,
     payload,
+  };
+}
+
+export function selectUser(payload) {
+  return {
+    type: SELECT_USER,
+    payload,
+  };
+}
+export function unselectUser() {
+  return {
+    type: UNSELECT_USER,
   };
 }

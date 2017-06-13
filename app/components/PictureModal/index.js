@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router';
 import { Modal, ModalBody, ModalFooter } from 'react-bootstrap';
 import { helpTextColor, inactive } from 'utils/colors';
 import HeaderButton from 'components/HeaderButton';
@@ -23,7 +24,7 @@ const PicModalFooter = styled(ModalFooter)`
   padding: 5px;
 `;
 
-const UserLink = styled.a`
+const UserLink = styled(Link)`
   cursor: pointer;
 `;
 
@@ -103,7 +104,7 @@ class PictureModal extends React.PureComponent {
         </PModalBody>
         <PicModalFooter>
           <Title>{this.props.activePicture.title}</Title>
-          <UserLink href="#">
+          <UserLink to={`/${this.props.activePicture.username}`}>
             <AvatarThumbnail src={this.props.activePicture.userThumbnail} />
             <ModalFooterTxt>{this.props.activePicture.username}</ModalFooterTxt>
           </UserLink>

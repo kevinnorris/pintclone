@@ -5,6 +5,7 @@ import HeaderButton from 'components/HeaderButton';
 import { background, fontFamily } from 'utils/colors';
 import Logo from 'components/Logo';
 import HeaderButtonSmall from 'components/HeaderButtonSmall';
+import HeaderLink from 'components/HeaderLink';
 import AddPicPopover from 'components/AddPicPopover';
 
 const Wrapper = styled.div`
@@ -47,6 +48,7 @@ function Header({
   imgUrlChange,
   handelClick,
   handelSubmit,
+  username,
 }) {
   let ButtonGroup = (
     <ItemWrapper>
@@ -73,7 +75,7 @@ function Header({
         <Logo to="/">
           P
         </Logo>
-        <HeaderButtonSmall>My Pics</HeaderButtonSmall>
+        <HeaderLink to={`/${username}`}>My Pics</HeaderLink>
         <AddPicPopover
           error={error}
           fetching={fetching}

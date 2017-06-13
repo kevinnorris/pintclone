@@ -28,3 +28,6 @@ export const TOGGLE_POPOVER_SHOW = 'app/AddPicPopover/TOGGLE_POPOVER_SHOW';
 export const SET_POPOVER_TARGET = 'app/AddPicPopover/SET_POPOVER_TARGET';
 export const SET_POPOVER_IMGURL = 'app/AddPicPopover/SET_POPOVER_IMGURL';
 export const SET_POPOVER_TITLE = 'app/AddPicPopover/SET_POPOVER_TITLE';
+
+export const SELECT_USER = 'app/AddPicPopover/SELECT_USER';
+export const UNSELECT_USER = 'app/AddPicPopover/UNSELECT_USER';

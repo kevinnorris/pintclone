@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router';
 
 import {
   outline,
-  pinTitleColor,
   mainColor,
   main,
   btnBorderRadius,
@@ -69,12 +69,12 @@ const DeleteBtn = styled(ImgBtn)`
   font-weight: bold;
 `;
 
-const UserLink = styled.a`
+const UserLink = styled(Link)`
   cursor: pointer;
   color: ${inactive};
   text-decoration: none;
 
-  &:hover {
+  &:hover, &:active, &:focus {
     color: ${inactive};
     text-decoration: none;
   }
@@ -97,7 +97,7 @@ function Pin({ id, title, imgurl, username, userThumbnail, likes, liked, handelI
         null
       }
       <PinImg src={imgurl} onError={addDefaultSrc} alt={title} onClick={handelImgClick({ id, title, imgurl, username, userThumbnail, likes, liked, myPic })} />
-      <UserLink href="#">
+      <UserLink to={`/${username}`}>
         By {username}
       </UserLink>
     </Wrapper>

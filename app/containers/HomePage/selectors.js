@@ -43,6 +43,16 @@ const makeSelectAddPicFetching = () => createSelector(
   (HomePageState) => HomePageState.get('addPicFetching')
 );
 
+const makeSelectSelectedUser = () => createSelector(
+  selectHomePageDomain(),
+  (HomePageState) => HomePageState.get('selectedUser')
+);
+
+const makeSelectUserPictures = () => createSelector(
+  selectHomePageDomain(),
+  (HomePageState) => HomePageState.get('userPictures')
+);
+
 // Popover selectors
 const makeSelectShowPopover = () => createSelector(
   selectHomePageDomain(),
@@ -78,4 +88,6 @@ export {
   makeSelectPopoverTarget,
   makeSelectPopoverImgUrl,
   makeSelectPopoverTitle,
+  makeSelectSelectedUser,
+  makeSelectUserPictures,
 };

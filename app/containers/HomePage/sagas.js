@@ -18,6 +18,8 @@ import {
   errorDeletePicture,
   toggleShowPopover,
   togglePicModal,
+  selectUser,
+  unselectUser,
 } from './actions';
 
 export function* allPicturesSaga(action) {
@@ -34,6 +36,9 @@ export function* allPicturesSaga(action) {
     const response = yield call(request, requestUrl);
     if (response.success) {
       yield put(requestPicturesSuccess({ pictures: response.data }));
+      if (window.location.pathname.length > 1) {
+        yield put(selectUser({ username: window.location.pathname.slice(1) }));
+      }
     } else {
       yield put(requestPicturesError({ error: response.error }));
     }
@@ -154,10 +159,23 @@ export function* deletePicWatcher() {
   yield cancel(watcher);
 }
 
+export function* selectUserSaga(action) {
+  if (action.payload.pathname === '/') {
+    yield put(unselectUser());
+  } else {
+    yield put(selectUser({ username: action.payload.pathname.slice(1) }));
+  }
+}
+
+export function* selectUserWatcher() {
+  const watcher = yield takeLatest(LOCATION_CHANGE, selectUserSaga);
+}
+
 // All sagas to be loaded
 export default [
   allPicturesWatcher,
   likeWatcher,
   addPicWatcher,
   deletePicWatcher,
+  selectUserWatcher,
 ];

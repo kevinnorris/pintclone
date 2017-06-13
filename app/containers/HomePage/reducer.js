@@ -23,6 +23,8 @@ import {
   SET_POPOVER_TARGET,
   SET_POPOVER_IMGURL,
   SET_POPOVER_TITLE,
+  SELECT_USER,
+  UNSELECT_USER,
 } from './constants';
 
 const initialState = fromJS({
@@ -41,6 +43,8 @@ const initialState = fromJS({
   popoverTarget: false,
   popoverImgUrl: '',
   popoverTitle: '',
+  selectedUser: false,
+  userPictures: false,
 });
 
 function homePageReducer(state = initialState, action) {
@@ -137,7 +141,7 @@ function homePageReducer(state = initialState, action) {
       return state
         .set('deletePicFetching', false)
         // remove specified picture from pictures
-        .set('pictures', state.get('pictures').filter((p) => p.get('id') !== action.payload.id));
+        .set('pictures', state.get('pictures').filter((pic) => pic.get('id') !== action.payload.id));
     case ERROR_DELETE_PICTURE:
       return state
         .set('error', action.payload.error);
@@ -153,6 +157,15 @@ function homePageReducer(state = initialState, action) {
     case SET_POPOVER_TITLE:
       return state
         .set('popoverTitle', action.payload.title);
+    case SELECT_USER:
+      return state
+        .set('showPicModal', false) // Closes the picture modal if a user is selected
+        .set('selectedUser', action.payload.username)
+        .set('userPictures', state.get('pictures').filter((pic) => pic.get('username') === action.payload.username));
+    case UNSELECT_USER:
+      return state
+        .set('selectedUser', false)
+        .set('userPictures', false);
     default:
       return state;
   }

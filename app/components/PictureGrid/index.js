@@ -70,7 +70,7 @@ PictureGrid.propTypes = {
   handelImgClick: React.PropTypes.func.isRequired,
   handelLikeClick: React.PropTypes.func.isRequired,
   handelDeleteClick: React.PropTypes.func.isRequired,
-  username: React.PropTypes.string.isRequired,
+  username: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.string]).isRequired,
 };
 
 export default PictureGrid;
