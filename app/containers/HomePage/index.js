@@ -8,7 +8,7 @@ import * as auth from 'containers/App/auth';
 import PictureGrid from 'components/PictureGrid';
 import PictureModal from 'components/PictureModal';
 
-import { makeSelectError, makeSelectToken } from 'containers/App/selectors';
+import { makeSelectError, makeSelectToken, makeSelectUsername } from 'containers/App/selectors';
 import { authUserSuccess, authUserError, logoutUser } from 'containers/App/actions';
 
 import Header from './Header';
@@ -28,6 +28,7 @@ import {
   setPopoverTarget,
   setPopoverImgUrl,
   setPopoverTitle,
+  requestDeletePicture,
 } from './actions';
 import {
   makeSelectShowAuthModal,
@@ -98,6 +99,12 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
     }
   )
 
+  handelDeleteClick = (picId) => (
+    () => (
+      this.props.deletePic({ picId })
+    )
+  )
+
   handlePopoverClick = (e) => {
     this.props.setPopoverTarget({ target: e.target });
     this.props.toggleShowPopover();
@@ -145,6 +152,8 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
           pictures={this.props.pictures ? this.props.pictures.toJS() : this.props.pictures}
           handelImgClick={this.handelImgClick}
           handelLikeClick={this.handelLikeClick}
+          handelDeleteClick={this.handelDeleteClick}
+          username={this.props.username}
         />
         <AuthModal
           show={this.props.showAuthModal}
@@ -161,6 +170,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
           toggleModal={this.props.togglePicModal}
           activePicture={this.props.activePicture ? this.props.activePicture.toJS() : false}
           handelLikeClick={this.handelLikeClick}
+          handelDeleteClick={this.handelDeleteClick}
         />
       </div>
     );
@@ -198,6 +208,8 @@ HomePage.propTypes = {
   setPopoverTarget: PropTypes.func.isRequired,
   setPopoverImgUrl: PropTypes.func.isRequired,
   setPopoverTitle: PropTypes.func.isRequired,
+  username: PropTypes.string.isRequired,
+  deletePic: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -214,6 +226,7 @@ const mapStateToProps = createStructuredSelector({
   showPopover: makeSelectShowPopover(),
   popoverImgUrl: makeSelectPopoverImgUrl(),
   popoverTitle: makeSelectPopoverTitle(),
+  username: makeSelectUsername(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -235,6 +248,7 @@ function mapDispatchToProps(dispatch) {
     setPopoverTarget: (payload) => dispatch(setPopoverTarget(payload)),
     setPopoverImgUrl: (payload) => dispatch(setPopoverImgUrl(payload)),
     setPopoverTitle: (payload) => dispatch(setPopoverTitle(payload)),
+    deletePic: (payload) => dispatch(requestDeletePicture(payload)),
   };
 }
 

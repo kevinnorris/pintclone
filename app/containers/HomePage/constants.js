@@ -19,6 +19,10 @@ export const REQUEST_ADD_PICTURE = 'app/HomePage/REQUEST_ADD_PICTURE';
 export const SUCCESS_ADD_PICTURE = 'app/HomePage/SUCCESS_ADD_PICTURE';
 export const ERROR_ADD_PICTURE = 'app/HomePage/ERROR_ADD_PICTURE';
 
+export const REQUEST_DELETE_PICTURE = 'app/HomePage/REQUEST_DELETE_PICTURE';
+export const SUCCESS_DELETE_PICTURE = 'app/HomePage/SUCCESS_DELETE_PICTURE';
+export const ERROR_DELETE_PICTURE = 'app/HomePage/ERROR_DELETE_PICTURE';
+
 // Picture popover constants
 export const TOGGLE_POPOVER_SHOW = 'app/AddPicPopover/TOGGLE_POPOVER_SHOW';
 export const SET_POPOVER_TARGET = 'app/AddPicPopover/SET_POPOVER_TARGET';

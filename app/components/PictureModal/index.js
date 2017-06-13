@@ -39,9 +39,18 @@ const ModalFooterTxt = styled.p`
   }
 `;
 
-const PicModalFooterBtn = styled(HeaderButton)`
+const FooterBtn = styled(HeaderButton)`
   position: absolute;
   left: 10px;
+  bottom: 22px;
+  width: 60px;
+  height: 40px;
+  padding: 10px;
+`;
+
+const FooterBtnRight = styled(HeaderButton)`
+  position: absolute;
+  right: 10px;
   bottom: 22px;
   width: 60px;
   height: 40px;
@@ -98,9 +107,15 @@ class PictureModal extends React.PureComponent {
             <AvatarThumbnail src={this.props.activePicture.userThumbnail} />
             <ModalFooterTxt>{this.props.activePicture.username}</ModalFooterTxt>
           </UserLink>
-          <PicModalFooterBtn main={this.props.activePicture.liked} onClick={this.props.handelLikeClick(this.props.activePicture.id, !!this.props.activePicture.liked)}>
+          <FooterBtn main={this.props.activePicture.liked} onClick={this.props.handelLikeClick(this.props.activePicture.id, !!this.props.activePicture.liked)}>
             <span className="glyphicon glyphicon-heart" aria-hidden="true" /> {this.props.activePicture.likes ? this.props.activePicture.likes : 0}
-          </PicModalFooterBtn>
+          </FooterBtn>
+          {this.props.activePicture.myPic ?
+            <FooterBtnRight onClick={this.props.handelDeleteClick(this.props.activePicture.id)}>
+              <span className="glyphicon glyphicon-trash" aria-hidden="true" />
+            </FooterBtnRight> :
+            null
+          }
         </PicModalFooter>
       </PModal>
     );
@@ -112,6 +127,7 @@ PictureModal.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   activePicture: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
   handelLikeClick: PropTypes.func.isRequired,
+  handelDeleteClick: React.PropTypes.func.isRequired,
 };
 
 export default PictureModal;

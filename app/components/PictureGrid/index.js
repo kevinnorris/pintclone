@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   }
 `;
 
-function PictureGrid({ pictures, handelImgClick, handelLikeClick }) {
+function PictureGrid({ pictures, handelImgClick, handelLikeClick, handelDeleteClick, username }) {
   let pics;
   if (pictures) {
     pics = pictures.map((element) => (
@@ -44,6 +44,8 @@ function PictureGrid({ pictures, handelImgClick, handelLikeClick }) {
         liked={element.liked}
         handelImgClick={handelImgClick}
         handelLikeClick={handelLikeClick}
+        handelDeleteClick={handelDeleteClick}
+        myPic={username === element.username}
       />
     ));
   }
@@ -67,6 +69,8 @@ PictureGrid.propTypes = {
   pictures: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.bool]),
   handelImgClick: React.PropTypes.func.isRequired,
   handelLikeClick: React.PropTypes.func.isRequired,
+  handelDeleteClick: React.PropTypes.func.isRequired,
+  username: React.PropTypes.string.isRequired,
 };
 
 export default PictureGrid;

@@ -16,6 +16,9 @@ import {
   REQUEST_ADD_PICTURE,
   SUCCESS_ADD_PICTURE,
   ERROR_ADD_PICTURE,
+  REQUEST_DELETE_PICTURE,
+  SUCCESS_DELETE_PICTURE,
+  ERROR_DELETE_PICTURE,
   TOGGLE_POPOVER_SHOW,
   SET_POPOVER_TARGET,
   SET_POPOVER_IMGURL,
@@ -33,6 +36,7 @@ const initialState = fromJS({
   activePicture: false,
   addPicError: false,
   addPicFetching: false,
+  deletePicFetching: false,
   showPopover: false,
   popoverTarget: false,
   popoverImgUrl: '',
@@ -125,6 +129,18 @@ function homePageReducer(state = initialState, action) {
       return state
         .set('addPicError', action.payload.error)
         .set('addPicFetching', false);
+    case REQUEST_DELETE_PICTURE:
+      return state
+        .set('error', false)
+        .set('deletePicFetching', true);
+    case SUCCESS_DELETE_PICTURE:
+      return state
+        .set('deletePicFetching', false)
+        // remove specified picture from pictures
+        .set('pictures', state.get('pictures').filter((p) => p.get('id') !== action.payload.id));
+    case ERROR_DELETE_PICTURE:
+      return state
+        .set('error', action.payload.error);
     case TOGGLE_POPOVER_SHOW:
       return state
         .set('showPopover', !state.get('showPopover'));

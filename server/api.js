@@ -98,7 +98,7 @@ GET('/pictures/byUserId/:userId', (req) => db.pictures.findByOwnerId(req.params.
 POST('/pictures/add/', (req) => db.pictures.add([req.body.userId, req.body.imgUrl, req.body.title]));
 
 // Remove a picture
-POST('/pictures/delete/:pictureId', (req) => db.pictures.delete(req.params.pictureId));
+POST('/pictures/delete/', (req) => db.pictures.delete([req.body.pictureId, req.body.userId]));
 
 // Add a like
 POST('/likes/add/:pictureId', (req) => db.likes.add(req.body.userId, req.params.pictureId));

@@ -5,7 +5,8 @@ import request from 'utils/request';
 import { appUrl } from 'utils/constants';
 import { AUTHENTICATE_USER_SUCCESS } from 'containers/App/constants';
 import { makeSelectToken, makeSelectUserId, makeSelectUserData } from 'containers/App/selectors';
-import { REQUEST_PICTURES, REQUEST_LIKE_TOGGLE, REQUEST_ADD_PICTURE } from './constants';
+import { makeSelectShowPicModal } from 'containers/HomePage/selectors';
+import { REQUEST_PICTURES, REQUEST_LIKE_TOGGLE, REQUEST_ADD_PICTURE, REQUEST_DELETE_PICTURE } from './constants';
 import {
   requestPicturesSuccess,
   requestPicturesError,
@@ -13,7 +14,10 @@ import {
   likeToggleSuccess,
   successAddPicture,
   errorAddPicture,
+  successDeletePicture,
+  errorDeletePicture,
   toggleShowPopover,
+  togglePicModal,
 } from './actions';
 
 export function* allPicturesSaga(action) {
@@ -117,9 +121,43 @@ export function* addPicWatcher() {
   yield cancel(watcher);
 }
 
+export function* deletePicSaga(action) {
+  const token = yield select(makeSelectToken());
+  const userId = yield select(makeSelectUserId());
+  const showPicModal = yield select(makeSelectShowPicModal());
+
+  const requestUrl = `${appUrl}/api/pictures/delete`;
+
+  try {
+    const deletePicture = yield call(request, requestUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token, userId, pictureId: action.payload.picId }),
+    });
+    if (deletePicture.success) {
+      yield put(successDeletePicture(deletePicture.data));
+      if (showPicModal) {
+        yield put(togglePicModal());
+      }
+    } else {
+      yield put(errorDeletePicture({ error: action.payload.error }));
+    }
+  } catch (error) {
+    yield put(errorDeletePicture({ error: error.response }));
+  }
+}
+
+export function* deletePicWatcher() {
+  const watcher = yield takeLatest(REQUEST_DELETE_PICTURE, deletePicSaga);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+}
+
 // All sagas to be loaded
 export default [
   allPicturesWatcher,
   likeWatcher,
   addPicWatcher,
+  deletePicWatcher,
 ];

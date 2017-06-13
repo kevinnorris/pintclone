@@ -23,8 +23,8 @@ module.exports = (rep, pgp) => (
         rep.one(sql.add, params, (picture) => picture),
 
     // Delete picture by id;
-    delete: (id) =>
-        rep.oneOrNone(sql.delete, id),
+    delete: (params) =>
+        rep.oneOrNone(sql.delete, params),
 
     // Tries to find a picture from id;
     find: (id) =>

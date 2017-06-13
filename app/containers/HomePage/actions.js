@@ -14,6 +14,9 @@ import {
   REQUEST_ADD_PICTURE,
   SUCCESS_ADD_PICTURE,
   ERROR_ADD_PICTURE,
+  REQUEST_DELETE_PICTURE,
+  SUCCESS_DELETE_PICTURE,
+  ERROR_DELETE_PICTURE,
   TOGGLE_POPOVER_SHOW,
   SET_POPOVER_TARGET,
   SET_POPOVER_IMGURL,
@@ -44,19 +47,18 @@ export function togglePicModal() {
   };
 }
 
+// Request pictures
 export function requestPictures() {
   return {
     type: REQUEST_PICTURES,
   };
 }
-
 export function requestPicturesSuccess(payload) {
   return {
     type: REQUEST_PICTURES_SUCCESS,
     payload,
   };
 }
-
 export function requestPicturesError(payload) {
   return {
     type: REQUEST_PICTURES_ERROR,
@@ -64,33 +66,32 @@ export function requestPicturesError(payload) {
   };
 }
 
+// Select picture
 export function selectPicture(payload) {
   return {
     type: SELECT_PICTURE,
     payload,
   };
 }
-
 export function unselectPicture() {
   return {
     type: UNSELECT_PICTURE,
   };
 }
 
+// Toggle like
 export function likeToggle(payload) {
   return {
     type: REQUEST_LIKE_TOGGLE,
     payload,
   };
 }
-
 export function likeToggleError(payload) {
   return {
     type: ERROR_LIKE_TOGGLE,
     payload,
   };
 }
-
 export function likeToggleSuccess(payload) {
   return {
     type: SUCCESS_LIKE_TOGGLE,
@@ -98,23 +99,48 @@ export function likeToggleSuccess(payload) {
   };
 }
 
+// Add picture
 export function requestAddPicture(payload) {
   return {
     type: REQUEST_ADD_PICTURE,
     payload,
   };
 }
-
 export function successAddPicture(payload) {
   return {
     type: SUCCESS_ADD_PICTURE,
     payload,
   };
 }
-
 export function errorAddPicture(payload) {
   return {
     type: ERROR_ADD_PICTURE,
+    payload,
+  };
+}
+
+// Delete picture
+/**
+ * @param {object} payload {picId: number}
+ */
+export function requestDeletePicture(payload) {
+  return {
+    type: REQUEST_DELETE_PICTURE,
+    payload,
+  };
+}
+/**
+ * @param {object} payload {picId: number}
+ */
+export function successDeletePicture(payload) {
+  return {
+    type: SUCCESS_DELETE_PICTURE,
+    payload,
+  };
+}
+export function errorDeletePicture(payload) {
+  return {
+    type: ERROR_DELETE_PICTURE,
     payload,
   };
 }
@@ -125,21 +151,18 @@ export function toggleShowPopover() {
     type: TOGGLE_POPOVER_SHOW,
   };
 }
-
 export function setPopoverTarget(payload) {
   return {
     type: SET_POPOVER_TARGET,
     payload,
   };
 }
-
 export function setPopoverImgUrl(payload) {
   return {
     type: SET_POPOVER_IMGURL,
     payload,
   };
 }
-
 export function setPopoverTitle(payload) {
   return {
     type: SET_POPOVER_TITLE,

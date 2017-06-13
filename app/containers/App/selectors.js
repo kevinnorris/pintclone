@@ -23,6 +23,11 @@ const makeSelectUserId = () => createSelector(
   (globalState) => globalState.get('userId')
 );
 
+const makeSelectUsername = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.getIn(['userData', 'username'])
+);
+
 const makeSelectUserData = () => createSelector(
   selectGlobal(),
   (globalState) => ({
@@ -57,5 +62,6 @@ export {
   makeSelectToken,
   makeSelectUserId,
   makeSelectUserData,
+  makeSelectUsername,
   makeSelectLocationState,
 };
