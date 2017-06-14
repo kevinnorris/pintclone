@@ -18,6 +18,11 @@ const HeaderButton = styled(Button)`
     color: ${(props) => props.main ? mainColor : nonMainBtnColor};
     text-decoration: none;
   }
+
+  @media (max-width: 460px) {
+    width: 90px;
+    height: 30px;
+  }
 `;
 
 export default HeaderButton;

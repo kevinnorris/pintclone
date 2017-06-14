@@ -10,22 +10,18 @@ const masonryOptions = {
 
 const Wrapper = styled.div`
   margin: 0 auto;
-  width: 1200px;
+  width: 1480px;
 
-  @media (max-width: 1249px) {
-    width: 1000px;
+  @media (max-width: 1479px) {
+    width: 1110px;
   }
 
-  @media (max-width: 999px) {
-    width: 750px;
+  @media (max-width: 1109px) {
+    width: 740px;
   }
 
-  @media (max-width: 749px) {
-    width: 500px;
-  }
-
-  @media (max-width: 499px) {
-    width: 250px;
+  @media (max-width: 739px) {
+    width: 370px;
   }
 `;
 
