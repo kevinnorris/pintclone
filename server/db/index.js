@@ -1,3 +1,4 @@
+/* eslint no-param-reassign: 0 */
 const users = require('./repos/users');
 const pictures = require('./repos/pictures');
 const likes = require('./repos/likes');

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import HeaderButton from 'components/HeaderButton';
 import { background, fontFamily } from 'utils/colors';
 import Logo from 'components/Logo';
-import HeaderButtonSmall from 'components/HeaderButtonSmall';
 import HeaderLink from 'components/HeaderLink';
 import AddPicPopover from 'components/AddPicPopover';
 
@@ -117,6 +116,7 @@ Header.propTypes = {
   imgUrlChange: React.PropTypes.func.isRequired,
   handelClick: React.PropTypes.func.isRequired,
   handelSubmit: React.PropTypes.func.isRequired,
+  username: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.string]),
 };
 
 export default Header;

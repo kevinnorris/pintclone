@@ -7,7 +7,6 @@ import {
   REQUEST_PICTURES_SUCCESS,
   REQUEST_PICTURES_ERROR,
   SELECT_PICTURE,
-  UNSELECT_PICTURE,
   REQUEST_LIKE_TOGGLE,
   SUCCESS_LIKE_TOGGLE,
   ERROR_LIKE_TOGGLE,
@@ -68,16 +67,10 @@ export function requestPicturesError(payload) {
   };
 }
 
-// Select picture
 export function selectPicture(payload) {
   return {
     type: SELECT_PICTURE,
     payload,
-  };
-}
-export function unselectPicture() {
-  return {
-    type: UNSELECT_PICTURE,
   };
 }
 

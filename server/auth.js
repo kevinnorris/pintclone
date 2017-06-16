@@ -17,8 +17,6 @@ function sendToken(authType, req, res) {
   }, process.env.JWT_SECRET, {
     expiresIn: '4h',
   });
-  console.log('sending user');
-  console.log(req.user);
   return res.end(popupTools.popupResponse({
     success: true,
     token,

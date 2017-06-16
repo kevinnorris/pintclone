@@ -9,7 +9,6 @@ export const REQUEST_PICTURES_SUCCESS = 'app/HomePage/REQUEST_PICTURES_SUCCESS';
 export const REQUEST_PICTURES_ERROR = 'app/HomePage/REQUEST_PICTURES_ERROR';
 
 export const SELECT_PICTURE = 'app/HomePage/SELECT_PICTURE';
-export const UNSELECT_PICTURE = 'app/HomePage/UNSELECT_PICTURE';
 
 export const REQUEST_LIKE_TOGGLE = 'app/HomePage/REQUEST_LIKE_TOGGLE';
 export const SUCCESS_LIKE_TOGGLE = 'app/HomePage/SUCCESS_LIKE_TOGGLE';

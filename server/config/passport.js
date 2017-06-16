@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: 0 */
 // npm packages
 const GitHubStrategy = require('passport-github2').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
@@ -23,13 +24,10 @@ module.exports = (passport) => {
         .then((user) => {
           // Return existing user
           if (user) {
-            console.log('user found');
             return done(null, user);
           }
 
           // Save new user
-          const profileId = isTwitter ? 'twitterId:' : 'githubId:';
-          console.log(`${profileId} ${profile.id}, username: ${profile.username}, displayName: ${profile.displayName}, avatar: ${isTwitter ? profile._json.profile_img_url : profile._json.avatar_url}`);
           db.users.add([
             isTwitter ? null : profile.id,
             isTwitter ? profile.id : null,
@@ -37,14 +35,11 @@ module.exports = (passport) => {
             profile.displayName,
             isTwitter ? profile._json.profile_image_url : profile._json.avatar_url,
           ])
-            .then((newUser) => {
-              console.log('saving new user');
-              return done(null, newUser);
-            });
+            .then((newUser) => (
+              done(null, newUser)
+            ));
         })
         .catch((err) => {
-          console.log('problem saving user');
-          console.log(err);
           throw err;
         });
     });

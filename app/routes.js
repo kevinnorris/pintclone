@@ -41,21 +41,21 @@ export default function createRoutes(store) {
       path: '/:user',
       name: 'userPics',
       getComponent(nextState, cb) {
-      const importModules = Promise.all([
-        import('containers/HomePage/reducer'),
-        import('containers/HomePage/sagas'),
-        import('containers/HomePage'),
-      ]);
+        const importModules = Promise.all([
+          import('containers/HomePage/reducer'),
+          import('containers/HomePage/sagas'),
+          import('containers/HomePage'),
+        ]);
 
-      const renderRoute = loadModule(cb);
+        const renderRoute = loadModule(cb);
 
-      importModules.then(([reducer, sagas, component]) => {
-        injectReducer('homePage', reducer.default);
-        injectSagas(sagas.default);
-        renderRoute(component);
-      });
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('homePage', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
 
-      importModules.catch(errorLoading);
+        importModules.catch(errorLoading);
       },
     }, {
       path: '*',

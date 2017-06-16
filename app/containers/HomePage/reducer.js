@@ -9,7 +9,6 @@ import {
   REQUEST_PICTURES_SUCCESS,
   REQUEST_PICTURES_ERROR,
   SELECT_PICTURE,
-  UNSELECT_PICTURE,
   REQUEST_LIKE_TOGGLE,
   SUCCESS_LIKE_TOGGLE,
   ERROR_LIKE_TOGGLE,
@@ -77,9 +76,6 @@ function homePageReducer(state = initialState, action) {
     case SELECT_PICTURE:
       return state
         .set('activePicture', fromJS(action.payload.picture));
-    case UNSELECT_PICTURE:
-      return state
-        .set('activePicture', false);
     case REQUEST_LIKE_TOGGLE:
       return state
         .set('fetchingLike', true)

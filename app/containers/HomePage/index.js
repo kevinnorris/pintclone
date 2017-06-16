@@ -21,7 +21,6 @@ import {
   togglePicModal,
   requestPictures,
   selectPicture,
-  unselectPicture,
   likeToggle,
   requestAddPicture,
   errorAddPicture,
@@ -30,8 +29,6 @@ import {
   setPopoverImgUrl,
   setPopoverTitle,
   requestDeletePicture,
-  selectUser,
-  unselectUser,
 } from './actions';
 import {
   makeSelectShowAuthModal,
@@ -216,7 +213,6 @@ HomePage.propTypes = {
   authUserError: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
   selectPicture: PropTypes.func.isRequired,
-  unselectPicture: PropTypes.func.isRequired,
   likeToggle: PropTypes.func.isRequired,
   requestAddPicture: PropTypes.func.isRequired,
   errorAddPicture: PropTypes.func.isRequired,
@@ -232,8 +228,6 @@ HomePage.propTypes = {
   deletePic: PropTypes.func.isRequired,
   selectedUser: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   userPictures: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
-  selectUser: PropTypes.func.isRequired,
-  unselectUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -266,7 +260,6 @@ function mapDispatchToProps(dispatch) {
     authUserError: (payload) => dispatch(authUserError(payload)),
     logoutUser: () => dispatch(logoutUser()),
     selectPicture: (payload) => dispatch(selectPicture(payload)),
-    unselectPicture: () => dispatch(unselectPicture()),
     likeToggle: (payload) => dispatch(likeToggle(payload)),
     requestAddPicture: (payload) => dispatch(requestAddPicture(payload)),
     errorAddPicture: (payload) => dispatch(errorAddPicture(payload)),
@@ -275,8 +268,6 @@ function mapDispatchToProps(dispatch) {
     setPopoverImgUrl: (payload) => dispatch(setPopoverImgUrl(payload)),
     setPopoverTitle: (payload) => dispatch(setPopoverTitle(payload)),
     deletePic: (payload) => dispatch(requestDeletePicture(payload)),
-    selectUser: (payload) => dispatch(selectUser(payload)),
-    unselectUser: () => dispatch(unselectUser()),
   };
 }
 
