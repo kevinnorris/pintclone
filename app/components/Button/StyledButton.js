@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import { Link } from 'react-router';
-import { main, mainColor, mainHighlight, nonMainBtnBackground, nonMainBtnColor, nonMainHighlight } from 'utils/colors';
+import { nonMainBtnBackground, nonMainBtnColor, nonMainHighlight, main, mainColor, mainHighlight } from 'utils/colors';
 
-const HeaderLink = styled(Link)`
+
+const StyledButton = styled.button`
   background: ${(props) => props.main ? main : nonMainBtnBackground};
   color: ${(props) => props.main ? mainColor : nonMainBtnColor};
-  width: 96px;
-  height: 30px;
-  padding: 6px 12px;
+  width: ${(props) => props.small ? '96px' : '128px'};
+  padding: ${(props) => props.small ? '6px 12px' : '10px 12px'};
   margin: 0 5px;
+  -webkit-font-smoothing: antialiased;
   text-align: center;
   font-weight: bold;
   border: none;
@@ -19,6 +19,11 @@ const HeaderLink = styled(Link)`
     color: ${(props) => props.main ? mainColor : nonMainBtnColor};
     text-decoration: none;
   }
+
+  @media (max-width: 460px) {
+    width: 90px;
+    height: 30px;
+  }
 `;
 
-export default HeaderLink;
+export default StyledButton;

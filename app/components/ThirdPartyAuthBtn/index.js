@@ -6,7 +6,6 @@ import { githubColor, githubHighlight, twitterColor, twitterHighlight } from 'ut
 import githubLogo from './github_32px.png';
 import twitterLogo from './Twitter_Logo_White_On_Transparent.png';
 
-// Refactor so only have one thrid party auth button
 const AuthBtn = styled(Button)`
   background: ${(props) => props.isTwitter ? twitterColor : githubColor};
   color: white;

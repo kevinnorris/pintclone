@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import styled from 'styled-components';
 import { Modal, ModalBody, ModalFooter } from 'react-bootstrap';
 import { helpTextColor } from 'utils/colors';
-import HeaderButton from 'components/HeaderButton';
+import StyledButton from 'components/Button/StyledButton';
 import ThirdPartyAuthBtn from 'components/ThirdPartyAuthBtn';
 import Logo from 'components/Logo';
 
@@ -31,7 +31,7 @@ const AuthModalFooter = styled(ModalFooter)`
   text-align: center;
 `;
 
-const AuthModalFooterBtn = styled(HeaderButton)`
+const AuthModalFooterBtn = styled(StyledButton)`
   padding: 10px; 20px;
   margin-top: 10px;
   width: 60%;

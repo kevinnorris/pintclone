@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import HeaderButton from 'components/HeaderButton';
 import { background, fontFamily } from 'utils/colors';
 import Logo from 'components/Logo';
-import HeaderLink from 'components/HeaderLink';
+import Button from 'components/Button';
 import AddPicPopover from 'components/AddPicPopover';
 
 const Wrapper = styled.div`
@@ -51,8 +50,8 @@ function Header({
 }) {
   let ButtonGroup = (
     <ItemWrapper>
-      <HeaderButton main onClick={showModal(true)}>Signup</HeaderButton>
-      <HeaderButton onClick={showModal(false)}>Login</HeaderButton>
+      <Button main onClick={showModal(true)}>Signup</Button>
+      <Button onClick={showModal(false)}>Login</Button>
     </ItemWrapper>
   );
   let LogoGroup = (
@@ -66,7 +65,7 @@ function Header({
   if (loggedIn) {
     ButtonGroup = (
       <ItemWrapper>
-        <HeaderButton onClick={logout}>Logout</HeaderButton>
+        <Button onClick={logout}>Logout</Button>
       </ItemWrapper>
     );
     LogoGroup = (
@@ -74,7 +73,7 @@ function Header({
         <Logo to="/">
           P
         </Logo>
-        <HeaderLink to={`/${username}`}>My Pics</HeaderLink>
+        <Button to={`/${username}`}>My Pics</Button>
         <AddPicPopover
           error={error}
           fetching={fetching}

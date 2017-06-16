@@ -1,7 +1,6 @@
 import React from 'react';
 import { Overlay, Popover, Form, FormGroup, Col, FormControl, ControlLabel } from 'react-bootstrap';
-import HeaderButton from 'components/HeaderButton';
-import HeaderButtonSmall from 'components/HeaderButtonSmall';
+import Button from 'components/Button';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -15,7 +14,7 @@ const SetWidthPopover = styled(Popover)`
 function AddPicPopover({ error, fetching, show, target, imgUrl, title, titleChange, imgUrlChange, handelClick, handelSubmit }) {
   return (
     <Wrapper>
-      <HeaderButtonSmall onClick={handelClick}>Add Pic</HeaderButtonSmall>
+      <Button onClick={handelClick} small>Add Pic</Button>
       <Overlay
         show={show}
         target={target}
@@ -51,9 +50,9 @@ function AddPicPopover({ error, fetching, show, target, imgUrl, title, titleChan
             </FormGroup>
             <FormGroup>
               <Col smOffset={2} sm={10}>
-                <HeaderButton main type="submit">
+                <Button main type="submit">
                   Add Picture
-                </HeaderButton>
+                </Button>
               </Col>
             </FormGroup>
           </Form>

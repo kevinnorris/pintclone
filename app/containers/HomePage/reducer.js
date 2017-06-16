@@ -124,7 +124,7 @@ function homePageReducer(state = initialState, action) {
       return state
         .set('addPicFetching', false)
         // push returned picture to pictures
-        .update('pictures', (p) => p.push(action.payload.picture));
+        .update('pictures', (p) => p.push(fromJS(action.payload.picture)));
     case ERROR_ADD_PICTURE:
       return state
         .set('addPicError', action.payload.error)

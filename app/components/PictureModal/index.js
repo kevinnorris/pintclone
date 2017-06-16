@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router';
 import { Modal, ModalBody, ModalFooter } from 'react-bootstrap';
 import { helpTextColor, inactive } from 'utils/colors';
-import HeaderButton from 'components/HeaderButton';
+import StyledButton from 'components/Button/StyledButton';
 
 const PModal = styled(Modal)`
   color: ${helpTextColor};
@@ -40,7 +40,7 @@ const ModalFooterTxt = styled.p`
   }
 `;
 
-const FooterBtn = styled(HeaderButton)`
+const FooterBtn = styled(StyledButton)`
   position: absolute;
   left: 10px;
   bottom: 22px;
@@ -49,7 +49,7 @@ const FooterBtn = styled(HeaderButton)`
   padding: 10px;
 `;
 
-const FooterBtnRight = styled(HeaderButton)`
+const FooterBtnRight = styled(StyledButton)`
   position: absolute;
   right: 10px;
   bottom: 22px;
