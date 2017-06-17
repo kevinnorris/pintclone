@@ -1,3 +1,4 @@
+import { PropTypes } from 'react';
 import styled from 'styled-components';
 import { nonMainBtnBackground, nonMainBtnColor, nonMainHighlight, main, mainColor, mainHighlight } from 'utils/colors';
 
@@ -25,5 +26,10 @@ const StyledButton = styled.button`
     height: 30px;
   }
 `;
+
+StyledButton.propTypes = {
+  main: PropTypes.bool,
+  small: PropTypes.bool,
+};
 
 export default StyledButton;

@@ -1,9 +1,10 @@
+import { PropTypes } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router';
 import { nonMainBtnBackground, nonMainBtnColor, nonMainHighlight, main, mainColor, mainHighlight } from 'utils/colors';
 
 
-const StyledButton = styled(Link)`
+const StyledLink = styled(Link)`
   background: ${(props) => props.main ? main : nonMainBtnBackground};
   color: ${(props) => props.main ? mainColor : nonMainBtnColor};
   width: ${(props) => props.small ? '96px' : '128px'};
@@ -27,4 +28,9 @@ const StyledButton = styled(Link)`
   }
 `;
 
-export default StyledButton;
+StyledLink.propTypes = {
+  main: PropTypes.bool,
+  small: PropTypes.bool,
+};
+
+export default StyledLink;
