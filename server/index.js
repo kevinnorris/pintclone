@@ -15,6 +15,18 @@ const resolve = require('path').resolve;
 const app = express();
 const session = require('express-session');
 
+const forceSsl = (req, res, next) => {
+  if (req.headers['x-forwarded-proto'] !== 'https') {
+    res.redirect(['https://', req.get('Host'), req.url].join(''));
+  } else {
+    next();
+  }
+};
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(forceSsl);
+}
+
 // Add session support for passport-twitter
 const sess = {
   secret: process.env.SESSION_SECRET,
