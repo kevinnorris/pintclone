@@ -95,7 +95,11 @@ GET('/pictures', db.pictures.all);
 GET('/pictures/byUserId/:userId', (req) => db.pictures.findByOwnerId(req.params.userId));
 
 // Add a picture
-POST('/pictures/add/', (req) => db.pictures.add([req.body.userId, req.body.imgUrl, req.body.title]));
+POST('/pictures/add/', (req) => db.pictures.add([
+  req.body.userId,
+  req.body.imgUrl.replace(/http:\/\//, 'https://'),
+  req.body.title,
+]));
 
 // Remove a picture
 POST('/pictures/delete/', (req) => db.pictures.delete([req.body.pictureId, req.body.userId]));
