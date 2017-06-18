@@ -107,7 +107,7 @@ POST('/likes/add/:pictureId', (req) => db.likes.add(req.body.userId, req.params.
 POST('/likes/delete/:pictureId', (req) => db.likes.delete(req.body.userId, req.params.pictureId));
 
 // ------------ Debugging Routes ------------
-
+/*
 // Get users
 GET('/users', db.users.all);
 
@@ -139,5 +139,5 @@ GET('/likes/create', db.likes.create);
 GET('/likes/init', db.likes.init);
 GET('/likes/empty', db.likes.empty);
 GET('/likes/drop', db.likes.drop);
-
+*/
 module.exports = apiRoutes;
