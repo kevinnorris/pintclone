@@ -97,6 +97,8 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
     () => {
       if (this.props.token) {
         this.props.likeToggle({ pictureId, liked: hasLiked });
+      } else {
+        this.showModal(false)();
       }
     }
   )
