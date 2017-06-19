@@ -141,9 +141,17 @@ function homePageReducer(state = initialState, action) {
     case ERROR_DELETE_PICTURE:
       return state
         .set('error', action.payload.error);
-    case TOGGLE_POPOVER_SHOW:
-      return state
+    case TOGGLE_POPOVER_SHOW: {
+      const newState = state
         .set('showPopover', !state.get('showPopover'));
+      // If the popover has been closed, clear it
+      if (!newState.get('showPopover')) {
+        return newState
+          .set('popoverImgUrl', '')
+          .set('popoverTitle', '');
+      }
+      return newState;
+    }
     case SET_POPOVER_TARGET:
       return state
         .set('popoverTarget', action.payload.target);
