@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router';
 import { Modal, ModalBody, ModalFooter } from 'react-bootstrap';
-import { helpTextColor, inactive } from 'utils/colors';
+import { helpTextColor, inactive, btnBorderRadius, background } from 'utils/colors';
 import StyledButton from 'components/Button/StyledButton';
 
 const PModal = styled(Modal)`
@@ -72,6 +72,22 @@ const Pic = styled.img`
 `;
 const Title = styled.h3`margin: 0 0 10px 0`;
 
+const CloseBtn = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 2px 10px;
+  border-radius: ${btnBorderRadius};
+  color: ${background};
+  background: rgba(113, 113, 113, 0.2);
+  font-weight: bold;
+  font-size: 2rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 class PictureModal extends React.PureComponent {
   componentDidUpdate() {
     if (this.props.activePicture) {
@@ -95,12 +111,12 @@ class PictureModal extends React.PureComponent {
     }
   }
 
-  // TODO: does not update on activepicture property changes, fix
   render() {
     return (
       <PModal id="modal" show={this.props.show} onHide={this.props.toggleModal}>
         <PModalBody>
           <Pic id="pictureModalImg" src={this.props.activePicture.imgurl} alt={this.props.activePicture.title} />
+          <CloseBtn onClick={this.props.toggleModal}>X</CloseBtn>
         </PModalBody>
         <PicModalFooter>
           <Title>{this.props.activePicture.title}</Title>
