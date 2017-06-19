@@ -23,6 +23,7 @@ const forceSsl = (req, res, next) => {
   }
 };
 
+// Comment this out if testing production on local machine, https wont work with localhost
 if (process.env.NODE_ENV === 'production') {
   app.use(forceSsl);
 }
