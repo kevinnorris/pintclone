@@ -23,6 +23,10 @@ const Wrapper = styled.div`
   @media (max-width: 739px) {
     width: 370px;
   }
+
+  @media (max-width: 370px) {
+    width: 330px;
+  }
 `;
 
 function PictureGrid({ pictures, handelImgClick, handelLikeClick, handelDeleteClick, username }) {

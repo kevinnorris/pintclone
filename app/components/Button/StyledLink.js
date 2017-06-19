@@ -25,6 +25,7 @@ const StyledLink = styled(Link)`
   @media (max-width: 460px) {
     width: 90px;
     height: 30px;
+    padding: 5px 12px;
   }
 `;
 

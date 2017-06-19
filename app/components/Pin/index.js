@@ -21,6 +21,10 @@ const PinImg = styled.img`
   &:hover{
     cursor: zoom-in;
   }
+
+  @media (max-width: 370px) {
+    width: 320px;
+  }
 `;
 
 const Wrapper = styled.div`
