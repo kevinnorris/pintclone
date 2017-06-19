@@ -2,8 +2,9 @@ import React, { PropTypes } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router';
 import { Modal, ModalBody, ModalFooter } from 'react-bootstrap';
-import { helpTextColor, inactive, btnBorderRadius, background } from 'utils/colors';
+import { helpTextColor, inactive } from 'utils/colors';
 import StyledButton from 'components/Button/StyledButton';
+import CloseModalButton from 'components/CloseModalButton';
 
 const PModal = styled(Modal)`
   color: ${helpTextColor};
@@ -47,6 +48,11 @@ const FooterBtn = styled(StyledButton)`
   width: 60px;
   height: 40px;
   padding: 10px;
+
+  @media (max-width: 460px) {
+    width: 60px;
+    height: 40px;
+  }
 `;
 
 const FooterBtnRight = styled(StyledButton)`
@@ -56,6 +62,11 @@ const FooterBtnRight = styled(StyledButton)`
   width: 60px;
   height: 40px;
   padding: 10px;
+
+  @media (max-width: 460px) {
+    width: 60px;
+    height: 40px;
+  }
 `;
 
 const AvatarThumbnail = styled.img`
@@ -71,22 +82,6 @@ const Pic = styled.img`
   height: auto;
 `;
 const Title = styled.h3`margin: 0 0 10px 0`;
-
-const CloseBtn = styled.button`
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  padding: 2px 10px;
-  border-radius: ${btnBorderRadius};
-  color: ${background};
-  background: rgba(113, 113, 113, 0.2);
-  font-weight: bold;
-  font-size: 2rem;
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
 
 class PictureModal extends React.PureComponent {
   componentDidUpdate() {
@@ -116,7 +111,7 @@ class PictureModal extends React.PureComponent {
       <PModal id="modal" show={this.props.show} onHide={this.props.toggleModal}>
         <PModalBody>
           <Pic id="pictureModalImg" src={this.props.activePicture.imgurl} alt={this.props.activePicture.title} />
-          <CloseBtn onClick={this.props.toggleModal}>X</CloseBtn>
+          <CloseModalButton onClick={this.props.toggleModal}>X</CloseModalButton>
         </PModalBody>
         <PicModalFooter>
           <Title>{this.props.activePicture.title}</Title>

@@ -4,6 +4,7 @@ import { Modal, ModalBody, ModalFooter } from 'react-bootstrap';
 import { helpTextColor } from 'utils/colors';
 import StyledButton from 'components/Button/StyledButton';
 import ThirdPartyAuthBtn from 'components/ThirdPartyAuthBtn';
+import CloseModalButton from 'components/CloseModalButton';
 import Logo from 'components/Logo';
 
 const ModalTitle = styled.h1`
@@ -51,6 +52,7 @@ function AuthModal({ show, isSignup, error, toggleModal, twitterLogin, githubLog
   return (
     <AModal show={show} onHide={toggleModal}>
       <AuthModalBody>
+        <CloseModalButton onClick={toggleModal}>X</CloseModalButton>
         <Logo>P</Logo>
         <ModalTitle>{isSignup ? 'Sign up to see more' : 'Log in to see more'}</ModalTitle>
         <ThirdPartyAuthBtn
