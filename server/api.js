@@ -97,7 +97,7 @@ GET('/pictures/byUserId/:userId', (req) => db.pictures.findByOwnerId(req.params.
 // Add a picture
 POST('/pictures/add/', (req) => db.pictures.add([
   req.body.userId,
-  req.body.imgUrl.replace(/http:\/\//, 'https://'),
+  req.body.imgUrl,
   req.body.title,
 ]));
 
